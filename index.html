@@ -20,6 +20,11 @@
             color: #333;
         }
 
+        /* Line height for readability */
+        p {
+            line-height: 1.6;
+        }
+
         /* Sidebar styles */
         .sidebar {
             width: 250px;
@@ -31,13 +36,23 @@
             transition: transform 0.3s ease;
         }
 
-        /* Mobile sidebar */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
+        /* Mobile sidebar hidden by default */
+        .sidebar.hidden {
+            display: none;
+        }
+
+        /* Sidebar button for mobile */
+        .menu-button {
+            display: none;
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
         }
 
         /* Sidebar links */
@@ -65,9 +80,22 @@
             transition: margin-left 0.3s ease;
         }
 
+        /* Mobile adjustments */
         @media (max-width: 768px) {
+            .menu-button {
+                display: block;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: absolute;
+                top: 50px;
+            }
+
             .content {
                 margin-left: 0;
+                padding-top: 60px;
             }
         }
 
@@ -84,7 +112,9 @@
 </head>
 <body>
 
-    <div class="sidebar">
+    <button class="menu-button" onclick="toggleSidebar()">☰ Menu</button>
+
+    <div class="sidebar hidden" id="sidebar">
         <a href="#home" onclick="showPage('home')"><h2>Garth Dew</h2></a>
         <div id="projects">
             <a href="#page1" onclick="showPage('page1')">Project 1</a>
@@ -118,10 +148,22 @@
     </div>
 
     <script>
+        // Show/hide sidebar on mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+
+        // Show specific page
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+
+            // Close sidebar after selecting a page (on mobile)
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
+            }
         }
     </script>
 </body>

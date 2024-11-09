@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brutalist Portfolio</title>
+    <title>Garth Dew - Portfolio</title>
     <style>
         /* Reset */
         * {
@@ -41,6 +41,10 @@
         }
 
         /* Sidebar links */
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+
         .sidebar a {
             display: block;
             padding: 10px 0;
@@ -81,15 +85,21 @@
 <body>
 
     <div class="sidebar">
-        <h2>My Projects</h2>
-        <a href="#page1" onclick="showPage('page1')">Project 1</a>
-        <a href="#page2" onclick="showPage('page2')">Project 2</a>
-        <a href="#page3" onclick="showPage('page3')">Project 3</a>
-        <a href="#page4" onclick="showPage('page4')">Project 4</a>
+        <a href="#home" onclick="showPage('home')"><h2>Garth Dew</h2></a>
+        <div id="projects">
+            <a href="#page1" onclick="showPage('page1')">Project 1</a>
+            <a href="#page2" onclick="showPage('page2')">Project 2</a>
+            <a href="#page3" onclick="showPage('page3')">Project 3</a>
+            <a href="#page4" onclick="showPage('page4')">Project 4</a>
+        </div>
     </div>
 
     <div class="content">
-        <div id="page1" class="page active">
+        <div id="home" class="page active">
+            <h1>About Garth Dew</h1>
+            <p>Welcome to my portfolio. I’m Garth Dew, a filmmaker and coach focused on helping people tell transformative stories. Explore my projects below to see my work.</p>
+        </div>
+        <div id="page1" class="page">
             <h1>Project 1</h1>
             <p>This is the content of Project 1.</p>
         </div>

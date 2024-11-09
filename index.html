@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brutalist Portfolio</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background: #ddd;
+            padding: 20px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        /* Mobile sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+        }
+
+        /* Sidebar links */
+        .sidebar a {
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .sidebar a:hover {
+            background: #bbb;
+        }
+
+        /* Main content */
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+            flex-grow: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        /* Page sections */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>My Projects</h2>
+        <a href="#page1" onclick="showPage('page1')">Project 1</a>
+        <a href="#page2" onclick="showPage('page2')">Project 2</a>
+        <a href="#page3" onclick="showPage('page3')">Project 3</a>
+        <a href="#page4" onclick="showPage('page4')">Project 4</a>
+    </div>
+
+    <div class="content">
+        <div id="page1" class="page active">
+            <h1>Project 1</h1>
+            <p>This is the content of Project 1.</p>
+        </div>
+        <div id="page2" class="page">
+            <h1>Project 2</h1>
+            <p>This is the content of Project 2.</p>
+        </div>
+        <div id="page3" class="page">
+            <h1>Project 3</h1>
+            <p>This is the content of Project 3.</p>
+        </div>
+        <div id="page4" class="page">
+            <h1>Project 4</h1>
+            <p>This is the content of Project 4.</p>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

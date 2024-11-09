@@ -36,12 +36,7 @@
             transition: transform 0.3s ease;
         }
 
-        /* Mobile sidebar hidden by default */
-        .sidebar.hidden {
-            display: none;
-        }
-
-        /* Sidebar button for mobile */
+        /* Sidebar button for mobile - hidden by default */
         .menu-button {
             display: none;
             background: #333;
@@ -85,12 +80,17 @@
             .menu-button {
                 display: block;
             }
-            
+
             .sidebar {
+                display: none;
                 width: 100%;
                 height: auto;
                 position: absolute;
                 top: 50px;
+            }
+
+            .sidebar.active {
+                display: block;
             }
 
             .content {
@@ -114,7 +114,7 @@
 
     <button class="menu-button" onclick="toggleSidebar()">☰ Menu</button>
 
-    <div class="sidebar hidden" id="sidebar">
+    <div class="sidebar" id="sidebar">
         <a href="#home" onclick="showPage('home')"><h2>Garth Dew</h2></a>
         <div id="projects">
             <a href="#page1" onclick="showPage('page1')">Project 1</a>
@@ -148,10 +148,10 @@
     </div>
 
     <script>
-        // Show/hide sidebar on mobile
+        // Toggle sidebar on mobile
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('active');
         }
 
         // Show specific page

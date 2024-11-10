@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garth Dew - Portfolio</title>
     
-    <!-- Stylish Sans-serif Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
     <style>
         /* Reset */
         * {
@@ -17,10 +14,10 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Helvetica', Arial, sans-serif;
             display: flex;
             min-height: 100vh;
-            background: #fff;
+            background: #f4f4f4;
             color: #333;
         }
 
@@ -32,7 +29,7 @@
         /* Sidebar styles */
         .sidebar {
             width: 250px;
-            background: #fff; 
+            background: #fff; /* White background */
             padding: 20px;
             overflow-y: auto;
             position: fixed;
@@ -40,17 +37,16 @@
             transition: transform 0.3s ease;
         }
 
-        /* Menu button for mobile, positioned on the right */
+        /* Menu button for mobile, no background */
         .menu-button {
             display: none;
-            background: #000;
-            color: #fff;
+            color: #333; /* Hamburger icon color */
             font-size: 24px;
             border: none;
             cursor: pointer;
             position: fixed;
             top: 10px;
-            right: 10px; /* Moved to the right side */
+            right: 10px; /* Positioned on the right */
             width: 40px;
             height: 40px;
             align-items: center;
@@ -83,6 +79,7 @@
             padding: 20px;
             flex-grow: 1;
             max-width: 800px;
+            background: #fff; /* White background for content */
             transition: margin-left 0.3s ease;
         }
 
@@ -122,6 +119,7 @@
         /* Page sections */
         .page {
             display: none;
+            background: #fff; /* White background for pages */
         }
 
         .page.active {
@@ -138,7 +136,7 @@
 </head>
 <body>
 
-    <!-- Menu button with hamburger icon -->
+    <!-- Menu button with hamburger icon, no background -->
     <button class="menu-button" onclick="toggleSidebar()">☰</button>
 
     <div class="sidebar" id="sidebar">

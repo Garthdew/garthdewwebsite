@@ -36,23 +36,29 @@
             transition: transform 0.3s ease;
         }
 
-        /* Sidebar button for mobile - hidden by default */
+        /* Menu button for mobile - hidden by default */
         .menu-button {
             display: none;
-            background: none;
-            color: #333;
+            background: #000;
+            color: #fff;
             font-size: 24px;
             border: none;
             cursor: pointer;
             position: fixed;
             top: 10px;
             left: 10px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             z-index: 1000;
         }
 
         /* Sidebar links */
         .sidebar h2 {
             margin-bottom: 20px;
+            font-weight: normal; /* Remove bold from heading */
         }
 
         .sidebar a {
@@ -60,34 +66,34 @@
             padding: 10px 0;
             text-decoration: none;
             color: #333;
-            font-weight: bold;
+            font-size: 16px;
         }
 
         .sidebar a:hover {
-            background: #bbb;
+            color: #0066cc; /* Standard web link hover color */
         }
 
         /* Main content */
         .content {
-            margin-left: 270px;
+            margin-left: 250px;
             padding: 20px;
             flex-grow: 1;
-            max-width: 800px; /* Narrower content width on desktop */
+            max-width: 800px;
             transition: margin-left 0.3s ease;
         }
 
         /* Center content on large screens */
         @media (min-width: 1024px) {
             .content {
-                margin-left: auto;
-                margin-right: auto;
+                margin-left: 270px; /* Reduced padding */
+                padding-left: 20px; /* Reduced padding */
             }
         }
 
         /* Mobile adjustments */
         @media (max-width: 768px) {
             .menu-button {
-                display: block;
+                display: flex;
             }
 
             .sidebar {

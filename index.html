@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garth Dew - Portfolio</title>
+    
+    <!-- Stylish Sans-serif Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         /* Reset */
         * {
@@ -13,7 +17,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             min-height: 100vh;
             background: #f4f4f4;
@@ -28,7 +32,7 @@
         /* Sidebar styles */
         .sidebar {
             width: 250px;
-            background: #ddd;
+            background: #fff; /* Changed to white */
             padding: 20px;
             overflow-y: auto;
             position: fixed;
@@ -58,6 +62,7 @@
         .sidebar h2 {
             margin-bottom: 20px;
             font-weight: normal; /* Remove bold from heading */
+            font-size: 20px; /* Smaller text for headings */
         }
 
         .sidebar a {
@@ -126,14 +131,15 @@
         /* Headings in content */
         h1 {
             font-weight: normal; /* Set page headings to normal weight */
+            font-size: 24px; /* Smaller heading text */
             margin-bottom: 16px; /* Add spacing after each heading */
         }
     </style>
 </head>
 <body>
 
-    <!-- Menu button with "+" symbol -->
-    <button class="menu-button" onclick="toggleSidebar()">+</button>
+    <!-- Menu button with hamburger icon -->
+    <button class="menu-button" onclick="toggleSidebar()">☰</button>
 
     <div class="sidebar" id="sidebar">
         <a href="#home" onclick="showPage('home')"><h2>Garth Dew</h2></a>

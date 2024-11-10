@@ -17,7 +17,7 @@
             font-family: 'Helvetica', Arial, sans-serif;
             display: flex;
             min-height: 100vh;
-            background: #f4f4f4;
+            background: #fff; /* Set the whole body background to white */
             color: #333;
         }
 
@@ -34,6 +34,7 @@
             overflow-y: auto;
             position: fixed;
             height: 100%;
+            border-right: 1px solid #e0e0e0; /* Light border to separate sidebar */
             transition: transform 0.3s ease;
         }
 
@@ -78,7 +79,7 @@
             margin-left: 250px;
             padding: 20px;
             flex-grow: 1;
-            max-width: 800px;
+            max-width: calc(100% - 250px); /* Adjust width to avoid overflow */
             background: #fff; /* White background for content */
             transition: margin-left 0.3s ease;
         }

@@ -3,194 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garth Dew - Portfolio</title>
-    
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Helvetica', Arial, sans-serif;
-            display: flex;
-            min-height: 100vh;
-            background: #fff; /* Set the whole body background to white */
-            color: #333;
-        }
-
-        /* Line height for readability */
-        p {
-            line-height: 1.6;
-        }
-
-        /* Sidebar styles */
-        .sidebar {
-            width: 250px;
-            background: #fff; /* White background */
-            padding: 20px;
-            overflow-y: auto;
-            position: fixed;
-            height: 100%;
-            transition: transform 0.3s ease;
-        }
-
-        /* Menu button for mobile, no background */
-        .menu-button {
-            display: none;
-            color: #333; /* Hamburger icon color */
-            font-size: 24px;
-            border: none;
-            cursor: pointer;
-            position: fixed;
-            top: 10px;
-            right: 10px; /* Positioned on the right */
-            width: 40px;
-            height: 40px;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            background: none; /* Remove background color */
-        }
-
-        /* Sidebar links */
-        .sidebar h2 {
-            margin-bottom: 20px;
-            font-weight: normal; /* Remove bold from heading */
-            font-size: 20px; /* Smaller text for headings */
-        }
-
-        .sidebar a {
-            display: block;
-            padding: 10px 0;
-            text-decoration: none;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .sidebar a:hover {
-            color: #0066cc; /* Standard web link hover color */
-        }
-
-        /* Main content */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            flex-grow: 1;
-            max-width: 800px; /* Reverted to original width */
-            background: #fff; /* White background for content */
-            transition: margin-left 0.3s ease;
-        }
-
-        /* Center content on large screens */
-        @media (min-width: 1024px) {
-            .content {
-                margin-left: 270px; /* Reduced padding */
-                padding-left: 20px; /* Reduced padding */
-            }
-        }
-
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .menu-button {
-                display: flex; /* Show menu button only on mobile */
-            }
-
-            .sidebar {
-                display: none;
-                width: 100%;
-                height: auto;
-                position: absolute;
-                top: 50px;
-            }
-
-            .sidebar.active {
-                display: block;
-            }
-
-            .content {
-                margin-left: 0;
-                padding-top: 60px;
-                max-width: 100%;
-            }
-        }
-
-        /* Page sections */
-        .page {
-            display: none;
-            background: #fff; /* White background for pages */
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* Headings in content */
-        h1 {
-            font-weight: normal; /* Set page headings to normal weight */
-            font-size: 24px; /* Smaller heading text */
-            margin-bottom: 16px; /* Add spacing after each heading */
-        }
-    </style>
+    <title>Project 1 - Garth Dew Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Menu button with hamburger icon, no background -->
-    <button class="menu-button" onclick="toggleSidebar()">☰</button>
-
-    <div class="sidebar" id="sidebar">
-        <a href="#home" onclick="showPage('home')"><h2>Garth Dew</h2></a>
-        <div id="projects">
-            <a href="#page1" onclick="showPage('page1')">Project 1</a>
-            <a href="#page2" onclick="showPage('page2')">Project 2</a>
-            <a href="#page3" onclick="showPage('page3')">Project 3</a>
-            <a href="#page4" onclick="showPage('page4')">Project 4</a>
-        </div>
-    </div>
-
-    <div class="content">
-        <div id="home" class="page active">
-            <h1>About Garth Dew</h1>
-            <p>Welcome to my portfolio. I’m Garth Dew, a filmmaker and coach focused on helping people tell transformative stories. Explore my projects below to see my work.</p>
-        </div>
-        <div id="page1" class="page">
-            <h1>Project 1</h1>
-            <p>This is the content of Project 1.</p>
-        </div>
-        <div id="page2" class="page">
-            <h1>Project 2</h1>
-            <p>This is the content of Project 2.</p>
-        </div>
-        <div id="page3" class="page">
-            <h1>Project 3</h1>
-            <p>This is the content of Project 3.</p>
-        </div>
-        <div id="page4" class="page">
-            <h1>Project 4</h1>
-            <p>This is the content of Project 4.</p>
-        </div>
-    </div>
-
+    <!-- JavaScript to dynamically load the sidebar -->
     <script>
-        // Toggle sidebar on mobile
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('active');
-        }
-
-        // Show specific page
-        function showPage(pageId) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-
-            // Close sidebar after selecting a page (on mobile)
-            if (window.innerWidth <= 768) {
-                toggleSidebar();
-            }
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("sidebar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.body.insertAdjacentHTML("afterbegin", data);
+                });
+        });
     </script>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="text-content">
+            <h1>Welcoime</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales est ac libero sagittis, nec fringilla arcu accumsan.</p>
+            <p>Fusce at turpis nec velit eleifend laoreet. Aliquam erat volutpat. Donec vel nunc vitae ligula ullamcorper convallis.</p>
+        </div>
 </body>
 </html>

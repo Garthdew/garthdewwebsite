@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - Music Embed</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <button class="menu-button" onclick="toggleSidebar()">☰</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("sidebar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.body.insertAdjacentHTML("afterbegin", data);
+                });
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+
+    <div class="content">
+        <div class="text-content">
+            <h1>Project Music</h1>
+            <p>Project description goes here.</p>
+            <div class="music-embed">
+                <iframe src="https://open.spotify.com/embed/track/TRACK_ID" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

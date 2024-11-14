@@ -19,19 +19,27 @@ body {
     overflow-y: auto;
     position: fixed;
     height: 100%;
-    transform: translateX(0); /* Fully visible on desktop */
+    transform: translateX(0);
     transition: transform 0.3s ease;
-    z-index: 999; /* Ensures it overlays correctly */
+    z-index: 999;
 }
 
-.sidebar h1, .sidebar h2, .text-content h1 {
+/* Garth Dew H1 Styling */
+.sidebar h1 {
+    font-size: 20px; /* Slightly larger font for H1 */
     font-weight: normal;
-    font-size: 16px;
+    margin-bottom: 15px;
 }
 
-.sidebar a, .sidebar p {
+.sidebar h2, .sidebar p {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 10px; /* Reduced spacing for compact layout */
+}
+
+.sidebar a {
     display: block;
-    padding: 10px 0;
+    padding: 5px 0; /* Reduced padding for closer spacing */
     text-decoration: none;
     color: #333;
     font-size: 16px;

@@ -88,7 +88,7 @@ body {
 /* Carousel styling */
 .carousel {
     display: flex;
-    align-items: center;
+    align-items: left;
     justify-content: flex-start;
     max-width: 600px;
     margin: 20px 0;

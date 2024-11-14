@@ -57,17 +57,17 @@ body {
 
 /* Main content styling */
 .content {
-    margin-left: 270px; /* Space for sidebar */
+    margin-left: 270px; /* Space for sidebar on desktop */
     padding: 20px;
     max-width: 800px;
     width: calc(100% - 270px);
     background: #fff;
 }
 
-/* Narrow text content */
+/* Text content styling */
 .text-content {
     padding: 20px 0;
-    max-width: 100%;
+    max-width: 100%; /* Ensures full width on mobile */
 }
 
 /* Full-width image gallery */
@@ -113,13 +113,17 @@ body {
         max-width: 100%; /* Full width on mobile */
     }
 
+    .text-content {
+        max-width: 100%; /* Ensures full width of text on mobile */
+    }
+
     .gallery-container img {
-        width: calc(50% - 10px);
+        width: calc(50% - 10px); /* Two images per row on mobile */
     }
 }
 
 @media (max-width: 480px) {
     .gallery-container img {
-        width: 100%;
+        width: 100%; /* One image per row on extra small screens */
     }
 }

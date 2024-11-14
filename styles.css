@@ -64,7 +64,7 @@ body {
 
 /* Main content styling */
 .content {
-    margin-left: 270px;
+    margin-left: 270px; /* Space for sidebar on desktop */
     padding: 20px;
     width: calc(100% - 270px);
     background: #fff;
@@ -85,47 +85,53 @@ body {
     padding: 20px 0;
 }
 
-.gallery-container img {
-    width: calc(33.333% - 10px);
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    cursor: pointer; /* Make images clickable */
-}
-
-/* Lightbox Styling */
-.lightbox {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    justify-content: center;
+/* Carousel styling */
+.carousel {
+    position: relative;
+    display: flex;
     align-items: center;
-    z-index: 1000;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px; /* Adjust for desired carousel size */
+    margin: 20px auto;
 }
 
-.lightbox img {
-    max-width: 90%;
-    max-height: 90%;
+.carousel img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
 }
 
-/* Close button for lightbox */
-.lightbox-close {
+.carousel-button {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
     cursor: pointer;
+    z-index: 1;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Responsive adjustments for mobile screens */
 @media (max-width: 768px) {
     .menu-button {
-        display: block;
+        display: block; /* Show menu button on mobile */
     }
 
     .sidebar {
@@ -155,12 +161,12 @@ body {
     }
 
     .gallery-container img {
-        width: calc(50% - 10px);
+        width: calc(50% - 10px); /* Two images per row on mobile */
     }
 }
 
 @media (max-width: 480px) {
     .gallery-container img {
-        width: 100%;
+        width: 100%; /* One image per row on extra small screens */
     }
 }

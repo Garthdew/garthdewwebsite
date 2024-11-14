@@ -19,8 +19,9 @@ body {
     overflow-y: auto;
     position: fixed;
     height: 100%;
-    transform: translateX(0); /* Visible on desktop */
+    transform: translateX(0); /* Fully visible on desktop */
     transition: transform 0.3s ease;
+    z-index: 999; /* Ensures it overlays correctly */
 }
 
 .sidebar h1, .sidebar h2, .text-content h1 {
@@ -65,7 +66,6 @@ body {
 
 /* Narrow text content */
 .text-content {
-    margin: 0 auto;
     padding: 20px 0;
     max-width: 100%;
 }
@@ -80,7 +80,7 @@ body {
 }
 
 .gallery-container img {
-    width: calc(33.333% - 10px);
+    width: calc(33.333% - 10px); /* Three images per row with gap */
     max-width: 100%;
     height: auto;
     border-radius: 4px;
@@ -98,7 +98,7 @@ body {
         height: 100%;
         position: fixed;
         top: 0;
-        right: 0;
+        left: 0;
         transition: transform 0.3s ease;
         z-index: 999;
     }

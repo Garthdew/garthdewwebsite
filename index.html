@@ -27,18 +27,28 @@
             sidebar.classList.toggle('active');
         }
 
-        // Lightbox functionality for gallery images
-        function openLightbox(src) {
-            const lightbox = document.querySelector('.lightbox');
-            const lightboxImage = document.querySelector('.lightbox img');
-            lightboxImage.src = src;
-            lightbox.style.display = 'flex';
+        // Carousel functionality
+        let currentImageIndex = 0;
+        const images = ["garth.jpg", "garth.jpg", "garth.jpg"]; // Add image paths here
+
+        function showImage(index) {
+            const galleryImage = document.querySelector(".carousel img");
+            galleryImage.src = images[index];
         }
 
-        function closeLightbox() {
-            const lightbox = document.querySelector('.lightbox');
-            lightbox.style.display = 'none';
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage(currentImageIndex);
         }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            showImage(currentImageIndex);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            showImage(currentImageIndex);
+        });
     </script>
 
     <!-- Main Content -->
@@ -47,19 +57,12 @@
             <p>Welcome</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales est ac libero sagittis, nec fringilla arcu accumsan.</p>
             <p>Fusce at turpis nec velit eleifend laoreet. Aliquam erat volutpat. Donec vel nunc vitae ligula ullamcorper convallis.</p>
-            <div class="gallery-container">
-                <img src="garth.jpg" alt="garth" onclick="openLightbox('garth.jpg')">
-                <img src="garth.jpg" alt="garth" onclick="openLightbox('garth.jpg')">
-                <img src="garth.jpg" alt="garth" onclick="openLightbox('garth.jpg')">
+            <div class="carousel">
+                <button class="carousel-button prev" onclick="prevImage()">❮</button>
+                <img src="" alt="Gallery Image">
+                <button class="carousel-button next" onclick="nextImage()">❯</button>
             </div>
         </div>
     </div>
-
-    <!-- Lightbox for image gallery -->
-    <div class="lightbox" onclick="closeLightbox()">
-        <span class="lightbox-close" onclick="closeLightbox()">×</span>
-        <img src="" alt="Gallery Image">
-    </div>
-
 </body>
 </html>

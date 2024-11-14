@@ -64,7 +64,7 @@ body {
 
 /* Main content styling */
 .content {
-    margin-left: 270px; /* Space for sidebar on desktop */
+    margin-left: 270px;
     padding: 20px;
     width: calc(100% - 270px);
     background: #fff;
@@ -89,9 +89,10 @@ body {
 .carousel {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Aligns carousel left */
-    max-width: 600px; /* Optional: adjust to control image size */
-    margin: 20px 0; /* Align with text without centering */
+    justify-content: flex-start;
+    max-width: 600px;
+    margin: 20px 0;
+    position: relative;
 }
 
 .carousel img {
@@ -99,6 +100,7 @@ body {
     height: auto;
     display: block;
     border-radius: 4px;
+    cursor: pointer; /* Allows clicking to scroll to the next image */
 }
 
 .carousel-button {
@@ -129,7 +131,7 @@ body {
 /* Responsive adjustments for mobile screens */
 @media (max-width: 768px) {
     .menu-button {
-        display: block; /* Show menu button on mobile */
+        display: block;
     }
 
     .sidebar {
@@ -150,26 +152,26 @@ body {
     .content {
         margin-left: 0;
         padding: 20px;
-        width: 100%; /* Full width on mobile */
-        max-width: 100%; /* Ensure no restrictions on mobile */
+        width: 100%;
+        max-width: 100%;
     }
 
     .text-content {
-        width: 100%; /* Full width of text on mobile */
+        width: 100%;
     }
 
     .gallery-container img {
-        width: calc(50% - 10px); /* Two images per row on mobile */
+        width: calc(50% - 10px);
     }
 
     .carousel {
-        justify-content: center; /* Center carousel on mobile */
+        justify-content: center;
         max-width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .gallery-container img {
-        width: 100%; /* One image per row on extra small screens */
+        width: 100%;
     }
 }

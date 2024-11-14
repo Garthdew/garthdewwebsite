@@ -17,6 +17,7 @@ body {
     overflow-y: auto;
     position: fixed;
     height: 100%;
+    transition: transform 0.3s ease;
 }
 
 .sidebar h2 {
@@ -35,6 +36,20 @@ body {
 
 .sidebar a:hover {
     color: #0066cc;
+}
+
+/* Hamburger menu button styling */
+.menu-button {
+    display: none;
+    background: none;
+    color: #333;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
 }
 
 /* Main content styling */
@@ -63,16 +78,30 @@ body {
 }
 
 .gallery-container img {
-    width: calc(33.333% - 10px); /* Three images per row with gap */
+    width: calc(33.333% - 10px);
     max-width: 100%;
     height: auto;
     border-radius: 4px;
 }
 
-/* Responsive adjustments for smaller screens */
+/* Responsive adjustments for mobile screens */
 @media (max-width: 768px) {
+    .menu-button {
+        display: block; /* Show menu button on mobile */
+    }
+
     .sidebar {
-        display: none;
+        transform: translateX(-100%); /* Hide sidebar off-screen initially */
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.active {
+        transform: translateX(0); /* Slide in sidebar when active */
     }
 
     .content {

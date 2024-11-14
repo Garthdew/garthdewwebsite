@@ -97,4 +97,27 @@ body {
         position: fixed;
         top: 0;
         right: 0;
-        t
+        transition: transform 0.3s ease;
+        z-index: 999;
+    }
+
+    .sidebar.active {
+        transform: translateX(0); /* Slide in sidebar when active */
+    }
+
+    .content {
+        margin-left: 0;
+        padding-top: 60px;
+        max-width: 100%; /* Full width on mobile */
+    }
+
+    .gallery-container img {
+        width: calc(50% - 10px); /* Two images per row on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-container img {
+        width: 100%; /* One image per row on extra small screens */
+    }
+}

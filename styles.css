@@ -87,13 +87,11 @@ body {
 
 /* Carousel styling */
 .carousel {
-    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 600px; /* Adjust for desired carousel size */
-    margin: 20px auto;
+    justify-content: flex-start; /* Aligns carousel left */
+    max-width: 600px; /* Optional: adjust to control image size */
+    margin: 20px 0; /* Align with text without centering */
 }
 
 .carousel img {
@@ -162,6 +160,11 @@ body {
 
     .gallery-container img {
         width: calc(50% - 10px); /* Two images per row on mobile */
+    }
+
+    .carousel {
+        justify-content: center; /* Center carousel on mobile */
+        max-width: 100%;
     }
 }
 

@@ -8,6 +8,9 @@
 </head>
 <body>
 
+    <!-- Hamburger Menu Button for Mobile -->
+    <button class="menu-button" onclick="toggleSidebar()">☰</button>
+
     <!-- JavaScript to dynamically load the sidebar -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -17,6 +20,12 @@
                     document.body.insertAdjacentHTML("afterbegin", data);
                 });
         });
+
+        // Function to toggle sidebar visibility on mobile
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
     </script>
 
     <!-- Main Content -->
@@ -26,5 +35,6 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales est ac libero sagittis, nec fringilla arcu accumsan.</p>
             <p>Fusce at turpis nec velit eleifend laoreet. Aliquam erat volutpat. Donec vel nunc vitae ligula ullamcorper convallis.</p>
         </div>
+    </div>
 </body>
 </html>

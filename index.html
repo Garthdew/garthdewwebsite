@@ -36,12 +36,14 @@
             galleryImage.src = images[index];
         }
 
-        function nextImage() {
+        function nextImage(event) {
+            if (event) event.stopPropagation(); // Stop propagation if triggered by button
             currentImageIndex = (currentImageIndex + 1) % images.length;
             showImage(currentImageIndex);
         }
 
-        function prevImage() {
+        function prevImage(event) {
+            if (event) event.stopPropagation(); // Stop propagation if triggered by button
             currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
             showImage(currentImageIndex);
         }
@@ -58,9 +60,9 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales est ac libero sagittis, nec fringilla arcu accumsan.</p>
             <p>Fusce at turpis nec velit eleifend laoreet. Aliquam erat volutpat. Donec vel nunc vitae ligula ullamcorper convallis.</p>
             <div class="carousel">
-                <button class="carousel-button prev" onclick="prevImage()">❮</button>
+                <button class="carousel-button prev" onclick="prevImage(event)">❮</button>
                 <img src="" alt="Gallery Image" onclick="nextImage()">
-                <button class="carousel-button next" onclick="nextImage()">❯</button>
+                <button class="carousel-button next" onclick="nextImage(event)">❯</button>
             </div>
         </div>
     </div>

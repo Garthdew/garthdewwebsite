@@ -67,7 +67,6 @@ body {
 .content {
     margin-left: 270px; /* Space for sidebar on desktop */
     padding: 20px;
-    max-width: 800px;
     width: calc(100% - 270px);
     background: #fff;
 }
@@ -75,7 +74,7 @@ body {
 /* Text content styling */
 .text-content {
     padding: 20px 0;
-    max-width: 100%; /* Ensures full width on mobile */
+    width: 100%; /* Ensures full width on mobile */
 }
 
 /* Full-width image gallery */
@@ -118,11 +117,12 @@ body {
     .content {
         margin-left: 0;
         padding: 20px;
-        max-width: 100%; /* Full width on mobile */
+        width: 100%; /* Full width on mobile */
+        max-width: 100%; /* Ensure no restrictions on mobile */
     }
 
     .text-content {
-        max-width: 100%; /* Ensures full width of text on mobile */
+        width: 100%; /* Ensures full width of text on mobile */
     }
 
     .gallery-container img {

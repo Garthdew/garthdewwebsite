@@ -11,6 +11,15 @@ body {
     font-weight: normal;
 }
 
+/* Heading styles */
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
 /* Sidebar styling */
 .sidebar {
     width: 250px;

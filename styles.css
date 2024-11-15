@@ -16,7 +16,6 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-size: 16px;
-    font-style: bold;
     margin-bottom: 8px;
 }
 
@@ -37,14 +36,14 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 18px;
     font-weight: normal;
     margin-bottom: 15px;
-    font-style: bold;
+    
 }
 
 .sidebar h2, .sidebar p {
     font-size: 16px;
     font-weight: normal;
     margin-bottom: 10px;
-    font-style: bold;
+    
 }
 
 .sidebar a {

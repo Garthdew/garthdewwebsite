@@ -74,7 +74,9 @@
 
     <script>
         let audioContext;
+        let audioBuffers = [];
         let playing = false;
+
         const chords = [
             'audio/chord1.mp3',
             'audio/chord2.mp3',
@@ -86,54 +88,54 @@
             'audio/chord8.mp3',
         ];
 
-        document.getElementById('playButton').addEventListener('click', function () {
+        document.getElementById('playButton').addEventListener('click', async function () {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                setupAudioContext();
+                await loadAudioBuffers();
             }
+
             if (audioContext.state === 'suspended') {
-                audioContext.resume().then(toggleMusic).catch(console.error);
+                await audioContext.resume();
+            }
+
+            if (!playing) {
+                playing = true;
+                playRandomChord();
+                this.textContent = 'Stop';
             } else {
-                toggleMusic();
+                playing = false;
+                this.textContent = 'Generate';
             }
         });
 
-        function setupAudioContext() {
-            const compressor = audioContext.createDynamicsCompressor();
-            compressor.threshold.setValueAtTime(-50, audioContext.currentTime);
-            compressor.knee.setValueAtTime(40, audioContext.currentTime);
-            compressor.ratio.setValueAtTime(12, audioContext.currentTime);
-            compressor.attack.setValueAtTime(0, audioContext.currentTime);
-            compressor.release.setValueAtTime(0.25, audioContext.currentTime);
-            compressor.connect(audioContext.destination);
+        async function loadAudioBuffers() {
+            const promises = chords.map(url => fetch(url)
+                .then(response => response.arrayBuffer())
+                .then(data => audioContext.decodeAudioData(data))
+            );
+
+            try {
+                audioBuffers = await Promise.all(promises);
+                console.log('Audio files loaded and decoded.');
+            } catch (error) {
+                console.error('Error loading audio files:', error);
+            }
         }
 
         function playRandomChord() {
             if (!playing) return;
-            const randomIndex = Math.floor(Math.random() * chords.length);
-            const audio = new Audio(chords[randomIndex]);
 
-            audio.addEventListener('canplaythrough', () => {
-                const source = audioContext.createMediaElementSource(audio);
-                source.connect(audioContext.destination);
-                audio.play().catch(console.error);
-            });
+            const randomIndex = Math.floor(Math.random() * audioBuffers.length);
+            const bufferSource = audioContext.createBufferSource();
+            bufferSource.buffer = audioBuffers[randomIndex];
+            bufferSource.connect(audioContext.destination);
+            bufferSource.start();
 
-            audio.load();
-
-            const randomInterval = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
-            setTimeout(playRandomChord, randomInterval);
-        }
-
-        function toggleMusic() {
-            if (!playing) {
-                playing = true;
-                playRandomChord();
-                document.getElementById('playButton').textContent = 'Stop';
-            } else {
-                playing = false;
-                document.getElementById('playButton').textContent = 'Generate';
-            }
+            bufferSource.onended = () => {
+                if (playing) {
+                    setTimeout(playRandomChord, Math.random() * 4000 + 1000); // 1-5 seconds interval
+                }
+            };
         }
     </script>
 </body>

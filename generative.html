@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Art - Randomized A4 Canvas</title>
+    <title>Generative Art - Layered Dice Rolls</title>
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background-color: #f0f0f0;
@@ -19,10 +20,17 @@
             background-color: white;
             border: 1px solid #ccc;
         }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <canvas id="artCanvas"></canvas>
+    <button id="rollButton">Roll the Dice</button>
 
     <script>
         // Constants for A4 size at 300 DPI
@@ -46,7 +54,7 @@
             { x: canvas.width / 2, y: (canvas.height / 3) * 2, width: canvas.width / 2, height: canvas.height / 3 },
         ];
 
-        // Function to generate random numbers
+        // Function to generate a random number (1-6)
         function rollDice() {
             return Math.floor(Math.random() * 6) + 1;
         }
@@ -55,32 +63,32 @@
         function drawDots(numDots, color, area) {
             const { x, y, width, height } = areas[area - 1];
 
-            for (let i = 0; i < numDots * 50; i++) {
+            for (let i = 0; i < numDots * 20; i++) { // Increase multiplier for larger clusters
                 const dotX = x + Math.random() * width;
                 const dotY = y + Math.random() * height;
-                const radius = Math.random() * 5 + 1;
+                const radius = Math.random() * 15 + 10; // Larger dots (10–25px radius)
 
                 ctx.beginPath();
                 ctx.arc(dotX, dotY, radius, 0, Math.PI * 2);
 
                 switch (color) {
                     case 1:
-                        ctx.fillStyle = `rgba(255, 0, 0, 0.8)`; // Red
+                        ctx.fillStyle = `rgba(255, 0, 0, 0.6)`; // Red
                         break;
                     case 2:
-                        ctx.fillStyle = `rgba(0, 255, 0, 0.8)`; // Green
+                        ctx.fillStyle = `rgba(0, 255, 0, 0.6)`; // Green
                         break;
                     case 3:
-                        ctx.fillStyle = `rgba(0, 0, 255, 0.8)`; // Blue
+                        ctx.fillStyle = `rgba(0, 0, 255, 0.6)`; // Blue
                         break;
                     case 4:
-                        ctx.fillStyle = `rgba(255, 255, 0, 0.8)`; // Yellow
+                        ctx.fillStyle = `rgba(255, 255, 0, 0.6)`; // Yellow
                         break;
                     case 5:
-                        ctx.fillStyle = `rgba(255, 0, 255, 0.8)`; // Magenta
+                        ctx.fillStyle = `rgba(255, 0, 255, 0.6)`; // Magenta
                         break;
                     case 6:
-                        ctx.fillStyle = `rgba(0, 255, 255, 0.8)`; // Cyan
+                        ctx.fillStyle = `rgba(0, 255, 255, 0.6)`; // Cyan
                         break;
                 }
 
@@ -88,19 +96,26 @@
             }
         }
 
-        // Function to generate the artwork
-        function generateArtwork() {
-            for (let i = 0; i < 6; i++) {
+        // Initialize round counter
+        let round = 0;
+
+        // Handle dice roll button click
+        const rollButton = document.getElementById("rollButton");
+        rollButton.addEventListener("click", () => {
+            if (round < 6) {
                 const numDots = rollDice(); // Determines number of dots
                 const color = rollDice(); // Determines color
                 const area = rollDice(); // Determines area of the canvas
 
                 drawDots(numDots, color, area);
-            }
-        }
+                round++;
 
-        // Generate the artwork on load
-        generateArtwork();
+                if (round === 6) {
+                    rollButton.disabled = true; // Disable button after 6 rounds
+                    rollButton.innerText = "Artwork Complete!";
+                }
+            }
+        });
     </script>
 </body>
 </html>

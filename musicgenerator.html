@@ -4,60 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ambient Music Generator</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Page-specific styling */
-        .music-generator {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .info h1, .info p {
+        /* General styling */
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
+        /* Trippy background */
+        body {
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            background-size: 300% 300%;
+            animation: backgroundAnimation 8s ease infinite;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Music Generator Container */
+        .music-generator {
+            text-align: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .music-generator h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .music-generator p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
         #playButton {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.8); /* Opaque white */
             border: none;
             color: black;
-            padding: 15px;
+            padding: 20px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 16px;
-            width: 100px;
-            height: 100px;
+            font-size: 18px;
+            width: 120px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            margin: 20px auto;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        #playButton:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.9);
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar will load here -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch("sidebar.html")
-                .then(response => response.text())
-                .then(data => {
-                    document.body.insertAdjacentHTML("afterbegin", data);
-                });
-        });
-    </script>
-
-    <div class="content">
-        <div class="music-generator">
-            <div class="info">
-                <h1>Ambient Music Generator</h1>
-                <p>A generative music experiment using HTML and JavaScript.</p>
-                <p>When you click 'Generate,' random chords are triggered to create a unique soundscape.</p>
-                <p>Built by <a href="https://garthdew.com">Garth Dew</a>.</p>
-            </div>
-            <button id="playButton">Generate</button>
-        </div>
+    <div class="music-generator">
+        <h1>Ambient Music Generator</h1>
+        <p>Click "Generate" to begin a unique, never-ending soundscape.</p>
+        <button id="playButton">Generate</button>
     </div>
 
     <script>
@@ -113,7 +132,6 @@
                     stopMusic();
                     this.textContent = 'Generate';
                 } else {
-                    // Handle audio context suspension on mobile
                     if (audioContext.state === 'suspended') {
                         audioContext.resume().then(() => {
                             startMusic();

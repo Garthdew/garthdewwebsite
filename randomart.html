@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oil Paint Artwork</title>
+    <title>Neon Oil Paint Artwork</title>
     <style>
         body {
             display: flex;
@@ -81,7 +81,7 @@
         canvas.width = DPI * A4_WIDTH_INCHES;
         canvas.height = DPI * A4_HEIGHT_INCHES;
 
-        const COLORS = ["green", "blue", "red", "yellow"];
+        const COLORS = ["#39ff14", "#00ffff", "#ff007f", "#ff4500"]; // Neon green, blue, pink, orange
         const AREAS = [
             { x: 0, y: 0, width: canvas.width / 2, height: canvas.height / 2 },
             { x: canvas.width / 2, y: 0, width: canvas.width / 2, height: canvas.height / 2 },
@@ -98,11 +98,20 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        function drawOilPaintMark(x, y, size, color) {
+        function drawBlobCircle(x, y, size, color) {
             ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.ellipse(x, y, size, size / 2, Math.random() * Math.PI, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.strokeStyle = color;
+            ctx.globalAlpha = 0.8;
+
+            for (let i = 0; i < 5; i++) { // Add texture with multiple overlapping strokes
+                const offsetX = randomInt(-size * 0.1, size * 0.1);
+                const offsetY = randomInt(-size * 0.1, size * 0.1);
+                ctx.beginPath();
+                ctx.arc(x + offsetX, y + offsetY, size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            }
+            ctx.globalAlpha = 1.0;
         }
 
         function generateArtwork() {
@@ -110,16 +119,16 @@
 
             // Generate random numbers
             const areaIndex = randomInt(0, 3); // Area (1-4)
-            const numberOfMarks = [5, 10, 15, 20][randomInt(0, 3)]; // 5, 10, 15, 20
-            const color = COLORS[randomInt(0, 3)]; // Green, Blue, Red, Yellow
+            const numberOfMarks = [50, 100, 150, 200][randomInt(0, 3)]; // 50, 100, 150, 200
+            const color = COLORS[randomInt(0, 3)]; // Neon green, blue, pink, orange
 
             const selectedArea = AREAS[areaIndex];
 
             for (let i = 0; i < numberOfMarks; i++) {
                 const x = randomInt(selectedArea.x, selectedArea.x + selectedArea.width);
                 const y = randomInt(selectedArea.y, selectedArea.y + selectedArea.height);
-                const size = randomInt(10, 50);
-                drawOilPaintMark(x, y, size, color);
+                const size = randomInt(20, 50); // Large circle size
+                drawBlobCircle(x, y, size, color);
             }
         }
 
@@ -129,7 +138,7 @@
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {
             const link = document.createElement("a");
-            link.download = "oil-paint-artwork.png";
+            link.download = "neon-artwork.png";
             link.href = canvas.toDataURL("image/png", 1.0);
             link.click();
         });

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plus and Minus Art</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #frame {
+            background: #ffffff;
+            border: 10px solid #c0c0c0;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2), inset 0px 5px 10px rgba(255, 255, 255, 0.5);
+            width: 30%;
+            aspect-ratio: 8.27 / 11.69;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        canvas {
+            width: 95%;
+            height: 95%;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            color: #333;
+            border: 2px solid #ddd;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <div id="frame">
+        <canvas id="artCanvas"></canvas>
+    </div>
+    <div class="buttons">
+        <button id="refreshButton">Refresh Artwork</button>
+        <button id="exportButton">Export High-Res</button>
+    </div>
+
+    <script>
+        const DPI = 300;
+        const A4_WIDTH_INCHES = 8.27;
+        const A4_HEIGHT_INCHES = 11.69;
+
+        const canvas = document.getElementById("artCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = DPI * A4_WIDTH_INCHES;
+        canvas.height = DPI * A4_HEIGHT_INCHES;
+
+        const SYMBOL_SIZE = 40;
+        const SPACING = SYMBOL_SIZE * 2 + 20;
+        const STROKE_WIDTH = 6;
+        const SHAPE_COLOR = "#D3D3D3";
+
+        function clearCanvas() {
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawPlus(x, y) {
+            ctx.strokeStyle = SHAPE_COLOR;
+            ctx.lineWidth = STROKE_WIDTH;
+
+            ctx.beginPath();
+            ctx.moveTo(x - SYMBOL_SIZE / 2, y);
+            ctx.lineTo(x + SYMBOL_SIZE / 2, y);
+            ctx.moveTo(x, y - SYMBOL_SIZE / 2);
+            ctx.lineTo(x, y + SYMBOL_SIZE / 2);
+            ctx.stroke();
+        }
+
+        function drawMinus(x, y) {
+            ctx.strokeStyle = SHAPE_COLOR;
+            ctx.lineWidth = STROKE_WIDTH;
+
+            ctx.beginPath();
+            ctx.moveTo(x - SYMBOL_SIZE / 2, y);
+            ctx.lineTo(x + SYMBOL_SIZE / 2, y);
+            ctx.stroke();
+        }
+
+        function generateArtwork() {
+            clearCanvas();
+
+            const cols = Math.floor((canvas.width - SPACING) / SPACING);
+            const rows = Math.floor((canvas.height - SPACING) / SPACING);
+            const offsetX = (canvas.width - cols * SPACING) / 2;
+            const offsetY = (canvas.height - rows * SPACING) / 2;
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * SPACING + offsetX + SPACING / 2;
+                    const y = row * SPACING + offsetY + SPACING / 2;
+
+                    const isPlus = Math.random() < 0.5;
+                    if (isPlus) {
+                        drawPlus(x, y);
+                    } else {
+                        drawMinus(x, y);
+                    }
+                }
+            }
+        }
+
+        const refreshButton = document.getElementById("refreshButton");
+        refreshButton.addEventListener("click", generateArtwork);
+
+        const exportButton = document.getElementById("exportButton");
+        exportButton.addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.download = "plus-and-minus-artwork.png";
+            link.href = canvas.toDataURL("image/png", 1.0);
+            link.click();
+        });
+
+        generateArtwork();
+    </script>
+</body>
+</html>

@@ -83,17 +83,21 @@
 
         const TOTAL_MARKS = 100000;
         const MARK_COLOR = "#000000";
-        const MARK_RADIUS = 10; // Increased radius for larger marks
 
         function clearCanvas() {
             ctx.fillStyle = "#FFFFFF";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
+        function randomSize(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
         function drawCharcoalMark(x, y) {
+            const radius = randomSize(4, 10); // Randomize radius between 4 and 10
             ctx.fillStyle = MARK_COLOR;
             ctx.beginPath();
-            ctx.arc(x, y, MARK_RADIUS, 0, Math.PI * 2); // Increased the radius
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.fill();
         }
 

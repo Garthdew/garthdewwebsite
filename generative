@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Art - Random Dots</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+        }
+        canvas {
+            display: block;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="dotsCanvas"></canvas>
+
+    <script>
+        // Setup the canvas
+        const canvas = document.getElementById("dotsCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas to full screen
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Function to generate a random array of dots
+        function generateDots(numDots) {
+            const dots = [];
+            for (let i = 0; i < numDots; i++) {
+                dots.push({
+                    x: Math.random() * canvas.width, // Random x-coordinate
+                    y: Math.random() * canvas.height, // Random y-coordinate
+                    radius: Math.random() * 5 + 2, // Random radius between 2 and 7
+                    color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.8)` // Random color
+                });
+            }
+            return dots;
+        }
+
+        // Function to draw the dots
+        function drawDots(dots) {
+            dots.forEach(dot => {
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+                ctx.fillStyle = dot.color;
+                ctx.fill();
+                ctx.closePath();
+            });
+        }
+
+        // Main execution
+        const randomDots = generateDots(500); // Generate 500 random dots
+        drawDots(randomDots);
+    </script>
+</body>
+</html>

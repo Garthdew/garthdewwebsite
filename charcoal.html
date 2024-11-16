@@ -93,8 +93,7 @@
             return Math.random() * (max - min) + min;
         }
 
-        function drawCharcoalMark(x, y) {
-            const radius = randomSize(4, 10); // Randomize radius between 4 and 10
+        function drawCharcoalMark(x, y, radius) {
             ctx.fillStyle = MARK_COLOR;
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -104,10 +103,11 @@
         function generateArtwork() {
             clearCanvas();
 
+            const charcoalSize = randomSize(2, 10); // Single size for all marks on this refresh
             for (let i = 0; i < TOTAL_MARKS; i++) {
                 const x = Math.random() * canvas.width;
                 const y = Math.random() * canvas.height;
-                drawCharcoalMark(x, y);
+                drawCharcoalMark(x, y, charcoalSize);
             }
         }
 

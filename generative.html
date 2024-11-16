@@ -22,7 +22,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
         canvas {
@@ -55,17 +54,18 @@
         canvas.width = DPI * A4_WIDTH_INCHES; // A4 width in pixels
         canvas.height = DPI * A4_HEIGHT_INCHES; // A4 height in pixels
 
-        // Resize the canvas in the browser for full artwork display
+        // Adjust the frame dimensions to maintain aspect ratio
         const frame = document.getElementById("frame");
+        const aspectRatio = canvas.width / canvas.height;
         frame.style.width = "80vw"; // Scale to 80% of viewport width
-        frame.style.height = `${(canvas.height / canvas.width) * 80}vw`; // Maintain aspect ratio
+        frame.style.height = `${80 / aspectRatio}vw`; // Maintain aspect ratio
 
         canvas.style.width = "100%";
         canvas.style.height = "100%";
 
         // Circle parameters
         const CIRCLE_RADIUS = 75; // Radius of circles
-        const SPACING = 200; // Spacing between circle centers
+        const SPACING = CIRCLE_RADIUS * 2 + 50; // Uniform spacing based on radius
 
         // Neon colors
         const NEON_COLORS = [
@@ -107,19 +107,19 @@
         function generateArtwork() {
             clearCanvas();
 
-            const rows = Math.floor(canvas.height / SPACING);
-            const cols = Math.floor(canvas.width / SPACING);
+            // Calculate rows and columns to perfectly fit the canvas
+            const cols = Math.floor((canvas.width - CIRCLE_RADIUS) / SPACING);
+            const rows = Math.floor((canvas.height - CIRCLE_RADIUS) / SPACING);
+            const offsetX = (canvas.width - cols * SPACING) / 2; // Center horizontally
+            const offsetY = (canvas.height - rows * SPACING) / 2; // Center vertically
 
-            for (let row = 0; row <= rows; row++) {
-                for (let col = 0; col <= cols; col++) {
-                    const x = col * SPACING + SPACING / 2;
-                    const y = row * SPACING + SPACING / 2;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * SPACING + offsetX + CIRCLE_RADIUS;
+                    const y = row * SPACING + offsetY + CIRCLE_RADIUS;
 
-                    // Only draw circles fully within the canvas
-                    if (x + CIRCLE_RADIUS <= canvas.width && y + CIRCLE_RADIUS <= canvas.height) {
-                        const type = Math.random() < 0.5 ? "solid" : "stroke"; // Random type
-                        drawCircle(x, y, type);
-                    }
+                    const type = Math.random() < 0.5 ? "solid" : "stroke"; // Random type
+                    drawCircle(x, y, type);
                 }
             }
         }

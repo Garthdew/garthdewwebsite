@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Art - Uniform Circles</title>
+    <title>Generative Art - Portrait Display</title>
     <style>
         body {
             display: flex;
@@ -12,14 +12,17 @@
             justify-content: center;
             background-color: #222;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             height: 100vh;
-            overflow: hidden;
+            box-sizing: border-box;
         }
         #frame {
-            background-color: white;
-            border: 20px solid white;
+            background-color: grey;
+            border: 20px solid grey;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
         }
         canvas {
@@ -28,7 +31,6 @@
         .buttons {
             display: flex;
             gap: 20px;
-            margin-top: 10px;
         }
         button {
             background-color: white;
@@ -72,21 +74,24 @@
         // Circle parameters
         const CIRCLE_RADIUS = 50 * SCALE_FACTOR; // Radius of circles
         const SPACING = CIRCLE_RADIUS * 2 + 20 * SCALE_FACTOR; // Uniform spacing based on radius
-        const STROKE_WIDTH = 5 * SCALE_FACTOR; // Thinner stroke
+        const STROKE_WIDTH = 5 * SCALE_FACTOR; // Stroke width
 
-        // Color palette for random background and circles
-        const COLORS = [
-            "#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD", "#1ABC9C", "#FF33A8", "#3498DB"
-        ];
+        // Primary colors for circles
+        const PRIMARY_COLORS = ["#FF0000", "#0000FF", "#FFFF00"]; // Red, Blue, Yellow
 
         // Function to get a random color
-        function getRandomColor() {
-            return COLORS[Math.floor(Math.random() * COLORS.length)];
+        function getRandomPrimaryColor() {
+            return PRIMARY_COLORS[Math.floor(Math.random() * PRIMARY_COLORS.length)];
+        }
+
+        // Function to get a random background color (black or white)
+        function getRandomBackgroundColor() {
+            return Math.random() < 0.5 ? "black" : "white";
         }
 
         // Function to clear the canvas and set a random background color
         function clearCanvas() {
-            const bgColor = getRandomColor();
+            const bgColor = getRandomBackgroundColor();
             ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             return bgColor; // Return background color for later use
@@ -94,7 +99,7 @@
 
         // Function to draw a single circle
         function drawCircle(x, y, type) {
-            const color = getRandomColor();
+            const color = getRandomPrimaryColor();
 
             ctx.beginPath();
             ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);

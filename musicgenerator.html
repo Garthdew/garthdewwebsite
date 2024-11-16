@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ambient Music Generator</title>
     <style>
-        /* General styling */
         body, html {
             margin: 0;
             padding: 0;
@@ -13,13 +12,10 @@
             overflow: hidden;
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-        }
-
-        /* Trippy background */
-        body {
             background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
             background-size: 300% 300%;
             animation: backgroundAnimation 8s ease infinite;
@@ -31,45 +27,46 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Music Generator Container */
         .music-generator {
             text-align: center;
             color: white;
             z-index: 10;
         }
 
-        .music-generator h1 {
+        h1 {
             font-size: 28px;
             margin-bottom: 10px;
         }
 
-        .music-generator p {
+        p {
             font-size: 16px;
             margin-bottom: 20px;
         }
 
-        /* Button Styling */
-        #playButton {
-            background-color: rgba(255, 255, 255, 0.8); /* Opaque white */
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
             border: none;
-            color: black;
-            padding: 20px;
-            border-radius: 50%;
+            border-radius: 5px;
             cursor: pointer;
+        }
+
+        #playButton {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
             font-size: 18px;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
             transition: transform 0.3s ease, background-color 0.3s ease;
-            margin: 0 auto; /* Ensure centering within the container */
         }
 
         #playButton:hover {
             transform: scale(1.1);
             background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        #countdown {
+            font-size: 24px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -77,8 +74,11 @@
 
     <div class="music-generator">
         <h1>Ambient Music Generator</h1>
-        <p>Click "Generate" to begin a unique, never-ending soundscape.</p>
+        <p>Set the timer and click "Generate" to create a soundscape.</p>
+        <label for="duration">Duration (minutes):</label>
+        <input type="number" id="duration" min="1" max="60" value="5">
         <button id="playButton">Generate</button>
+        <div id="countdown"></div>
     </div>
 
     <script>
@@ -104,6 +104,8 @@
             ];
 
             let playing = false;
+            let timer = null;
+            let countdownInterval = null;
 
             function playRandomChord() {
                 if (!playing) return;
@@ -118,28 +120,53 @@
                 setTimeout(playRandomChord, randomInterval);
             }
 
-            function startMusic() {
-                if (!playing) {
-                    playing = true;
-                    playRandomChord();
-                }
+            function startCountdown(duration) {
+                const countdown = document.getElementById('countdown');
+                let remainingTime = duration * 60; // Convert minutes to seconds
+
+                countdownInterval = setInterval(() => {
+                    if (remainingTime <= 0) {
+                        clearInterval(countdownInterval);
+                        countdown.textContent = 'Time’s up!';
+                    } else {
+                        const minutes = Math.floor(remainingTime / 60);
+                        const seconds = remainingTime % 60;
+                        countdown.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                        remainingTime--;
+                    }
+                }, 1000);
+            }
+
+            function startMusic(duration) {
+                playing = true;
+                playRandomChord();
+                startCountdown(duration);
+
+                timer = setTimeout(() => {
+                    stopMusic();
+                }, duration * 60 * 1000); // Convert minutes to milliseconds
             }
 
             function stopMusic() {
                 playing = false;
+                clearTimeout(timer);
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').textContent = '';
             }
 
             document.getElementById('playButton').addEventListener('click', function() {
+                const duration = parseInt(document.getElementById('duration').value, 10);
+
                 if (playing) {
                     stopMusic();
                     this.textContent = 'Generate';
                 } else {
                     if (audioContext.state === 'suspended') {
                         audioContext.resume().then(() => {
-                            startMusic();
+                            startMusic(duration);
                         });
                     } else {
-                        startMusic();
+                        startMusic(duration);
                     }
                     this.textContent = 'Stop';
                 }

@@ -130,18 +130,27 @@
             }
 
             document.getElementById('playButton').addEventListener('click', function() {
-                if (playing) {
-                    stopMusic();
-                    this.textContent = 'Generate';
-                } else {
-                    if (audioContext.state === 'suspended') {
-                        audioContext.resume().then(() => {
+                // Explicitly handle the AudioContext state
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume().then(() => {
+                        if (!playing) {
                             startMusic();
-                        });
-                    } else {
+                            this.textContent = 'Stop';
+                        } else {
+                            stopMusic();
+                            this.textContent = 'Generate';
+                        }
+                    }).catch((error) => {
+                        console.error('AudioContext resume failed:', error);
+                    });
+                } else {
+                    if (!playing) {
                         startMusic();
+                        this.textContent = 'Stop';
+                    } else {
+                        stopMusic();
+                        this.textContent = 'Generate';
                     }
-                    this.textContent = 'Stop';
                 }
             });
         });

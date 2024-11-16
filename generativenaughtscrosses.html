@@ -88,12 +88,7 @@
         const CIRCLE_RADIUS = 40;
         const SPACING = CIRCLE_RADIUS * 2 + 20; // Uniform spacing based on radius
         const STROKE_WIDTH = 6; // Thicker stroke lines
-        const COLORS = ["#FF0000", "#0000FF"]; // Red and Blue only
-
-        // Function to get a random color
-        function getRandomColor() {
-            return COLORS[Math.floor(Math.random() * COLORS.length)];
-        }
+        const SHAPE_COLOR = "#D3D3D3"; // Light gray for shapes
 
         // Function to clear the canvas
         function clearCanvas() {
@@ -104,7 +99,7 @@
         // Function to draw an X
         function drawX(x, y) {
             const offset = CIRCLE_RADIUS * 0.6;
-            ctx.strokeStyle = getRandomColor();
+            ctx.strokeStyle = SHAPE_COLOR;
             ctx.lineWidth = STROKE_WIDTH;
 
             ctx.beginPath();
@@ -117,7 +112,7 @@
 
         // Function to draw an O
         function drawO(x, y) {
-            ctx.strokeStyle = getRandomColor();
+            ctx.strokeStyle = SHAPE_COLOR;
             ctx.lineWidth = STROKE_WIDTH;
 
             ctx.beginPath();

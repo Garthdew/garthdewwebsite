@@ -7,32 +7,28 @@
     <style>
         body {
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             background-color: #222;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             height: 100vh;
             overflow: hidden;
         }
         #frame {
-            position: relative;
             background-color: white;
             border: 20px solid white;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
         }
         canvas {
             display: block;
         }
         .buttons {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             display: flex;
             gap: 20px;
-            opacity: 0.5;
+            margin-top: 10px;
         }
         button {
             background-color: white;
@@ -45,17 +41,17 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
         button:hover {
-            opacity: 1;
+            background-color: #f0f0f0;
         }
     </style>
 </head>
 <body>
     <div id="frame">
         <canvas id="artCanvas"></canvas>
-        <div class="buttons">
-            <button id="refreshButton">Refresh Artwork</button>
-            <button id="exportButton">Export High-Res</button>
-        </div>
+    </div>
+    <div class="buttons">
+        <button id="refreshButton">Refresh Artwork</button>
+        <button id="exportButton">Export High-Res</button>
     </div>
 
     <script>
@@ -67,47 +63,57 @@
         // Set up the canvas
         const canvas = document.getElementById("artCanvas");
         const ctx = canvas.getContext("2d");
-        canvas.width = DPI * A4_WIDTH_INCHES; // A4 width in pixels
-        canvas.height = DPI * A4_HEIGHT_INCHES; // A4 height in pixels
 
-        // Adjust the frame dimensions to maintain aspect ratio
-        const frame = document.getElementById("frame");
-        frame.style.width = "80vh"; // Scale to fit vertically
-        frame.style.height = `${80 * (canvas.height / canvas.width)}vh`; // Maintain aspect ratio
-
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        // Scale down the canvas for display
+        const SCALE_FACTOR = 0.7; // Adjust artwork size
+        canvas.width = DPI * A4_WIDTH_INCHES * SCALE_FACTOR;
+        canvas.height = DPI * A4_HEIGHT_INCHES * SCALE_FACTOR;
 
         // Circle parameters
-        const CIRCLE_RADIUS = 50; // Radius of circles
-        const SPACING = CIRCLE_RADIUS * 2 + 20; // Uniform spacing based on radius
+        const CIRCLE_RADIUS = 50 * SCALE_FACTOR; // Radius of circles
+        const SPACING = CIRCLE_RADIUS * 2 + 20 * SCALE_FACTOR; // Uniform spacing based on radius
+        const STROKE_WIDTH = 5 * SCALE_FACTOR; // Thinner stroke
 
-        // Function to clear the canvas and set a black background
+        // Color palette for random background and circles
+        const COLORS = [
+            "#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD", "#1ABC9C", "#FF33A8", "#3498DB"
+        ];
+
+        // Function to get a random color
+        function getRandomColor() {
+            return COLORS[Math.floor(Math.random() * COLORS.length)];
+        }
+
+        // Function to clear the canvas and set a random background color
         function clearCanvas() {
-            ctx.fillStyle = "black";
+            const bgColor = getRandomColor();
+            ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+            return bgColor; // Return background color for later use
         }
 
         // Function to draw a single circle
         function drawCircle(x, y, type) {
+            const color = getRandomColor();
+
             ctx.beginPath();
             ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
 
             if (type === "solid") {
-                // Solid white circle
-                ctx.fillStyle = "white";
+                // Solid circle
+                ctx.fillStyle = color;
                 ctx.fill();
             } else if (type === "stroke") {
-                // White stroke circle
-                ctx.strokeStyle = "white";
-                ctx.lineWidth = 10;
+                // Stroke circle
+                ctx.strokeStyle = color;
+                ctx.lineWidth = STROKE_WIDTH;
                 ctx.stroke();
             }
         }
 
         // Function to generate uniform circles
         function generateArtwork() {
-            clearCanvas();
+            const bgColor = clearCanvas(); // Clear canvas with a random background color
 
             // Calculate rows and columns to perfectly fit the canvas
             const cols = Math.floor((canvas.width - SPACING) / SPACING);
@@ -124,6 +130,8 @@
                     drawCircle(x, y, type);
                 }
             }
+
+            return bgColor; // Return the final background color
         }
 
         // Refresh button functionality
@@ -133,10 +141,26 @@
         // Export button functionality
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {
+            const originalWidth = canvas.width;
+            const originalHeight = canvas.height;
+
+            // Temporarily set the canvas to full A4 resolution for export
+            canvas.width = DPI * A4_WIDTH_INCHES;
+            canvas.height = DPI * A4_HEIGHT_INCHES;
+            ctx.scale(1 / SCALE_FACTOR, 1 / SCALE_FACTOR); // Scale up the artwork
+
+            generateArtwork(); // Redraw the artwork at full resolution
+
             const link = document.createElement("a");
             link.download = "generative-artwork.png";
             link.href = canvas.toDataURL("image/png", 1.0); // Full quality
             link.click();
+
+            // Reset canvas size after export
+            canvas.width = originalWidth;
+            canvas.height = originalHeight;
+            ctx.scale(SCALE_FACTOR, SCALE_FACTOR); // Scale back down
+            generateArtwork(); // Redraw for the smaller size
         });
 
         // Generate initial artwork

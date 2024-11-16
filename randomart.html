@@ -93,25 +93,31 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
+        function randomFloat(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
         function clearCanvas() {
             ctx.fillStyle = "#FFFFFF";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        function drawBlobCircle(x, y, size, color) {
+        function drawBlobCircle(x, y, size, color, opacity) {
+            ctx.globalAlpha = opacity; // Set random opacity
             ctx.fillStyle = color;
-            ctx.strokeStyle = color;
-            ctx.globalAlpha = 0.8;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1.0; // Reset opacity
+        }
 
-            for (let i = 0; i < 5; i++) { // Add texture with multiple overlapping strokes
-                const offsetX = randomInt(-size * 0.1, size * 0.1);
-                const offsetY = randomInt(-size * 0.1, size * 0.1);
-                ctx.beginPath();
-                ctx.arc(x + offsetX, y + offsetY, size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-            }
-            ctx.globalAlpha = 1.0;
+        function fillUnusedAreas(selectedAreaIndex) {
+            ctx.fillStyle = "#d3d3d3"; // Light grey
+            AREAS.forEach((area, index) => {
+                if (index !== selectedAreaIndex) {
+                    ctx.fillRect(area.x, area.y, area.width, area.height);
+                }
+            });
         }
 
         function generateArtwork() {
@@ -122,13 +128,22 @@
             const numberOfMarks = [50, 100, 150, 200][randomInt(0, 3)]; // 50, 100, 150, 200
             const color = COLORS[randomInt(0, 3)]; // Neon green, blue, pink, orange
 
+            fillUnusedAreas(areaIndex); // Grey out unused areas
+
             const selectedArea = AREAS[areaIndex];
 
             for (let i = 0; i < numberOfMarks; i++) {
-                const x = randomInt(selectedArea.x, selectedArea.x + selectedArea.width);
-                const y = randomInt(selectedArea.y, selectedArea.y + selectedArea.height);
                 const size = randomInt(20, 50); // Large circle size
-                drawBlobCircle(x, y, size, color);
+                const x = randomInt(
+                    selectedArea.x + size,
+                    selectedArea.x + selectedArea.width - size
+                );
+                const y = randomInt(
+                    selectedArea.y + size,
+                    selectedArea.y + selectedArea.height - size
+                );
+                const opacity = randomFloat(0.25, 1); // Random opacity (25%-100%)
+                drawBlobCircle(x, y, size, color, opacity);
             }
         }
 

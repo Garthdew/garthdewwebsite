@@ -12,25 +12,28 @@
             justify-content: center;
             background-color: #222;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             height: 100vh;
             box-sizing: border-box;
         }
         #frame {
             background-color: grey;
-            border: 20px solid grey;
+            border: 10px solid grey;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 40%; /* Make the frame smaller */
+            aspect-ratio: 8.27 / 11.69; /* Maintain A4 portrait aspect ratio */
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
         }
         canvas {
-            display: block;
+            width: 100%; /* Scale canvas to fit the frame */
+            height: 100%;
         }
         .buttons {
             display: flex;
             gap: 20px;
+            margin-top: 20px;
         }
         button {
             background-color: white;
@@ -66,15 +69,14 @@
         const canvas = document.getElementById("artCanvas");
         const ctx = canvas.getContext("2d");
 
-        // Scale down the canvas for display
-        const SCALE_FACTOR = 0.7; // Adjust artwork size
-        canvas.width = DPI * A4_WIDTH_INCHES * SCALE_FACTOR;
-        canvas.height = DPI * A4_HEIGHT_INCHES * SCALE_FACTOR;
+        // Full resolution for export
+        canvas.width = DPI * A4_WIDTH_INCHES;
+        canvas.height = DPI * A4_HEIGHT_INCHES;
 
         // Circle parameters
-        const CIRCLE_RADIUS = 50 * SCALE_FACTOR; // Radius of circles
-        const SPACING = CIRCLE_RADIUS * 2 + 20 * SCALE_FACTOR; // Uniform spacing based on radius
-        const STROKE_WIDTH = 5 * SCALE_FACTOR; // Stroke width
+        const CIRCLE_RADIUS = 50; // Radius of circles
+        const SPACING = CIRCLE_RADIUS * 2 + 20; // Uniform spacing based on radius
+        const STROKE_WIDTH = 5; // Stroke width
 
         // Primary colors for circles
         const PRIMARY_COLORS = ["#FF0000", "#0000FF", "#FFFF00"]; // Red, Blue, Yellow
@@ -118,7 +120,7 @@
 
         // Function to generate uniform circles
         function generateArtwork() {
-            const bgColor = clearCanvas(); // Clear canvas with a random background color
+            clearCanvas(); // Clear canvas with a random background color
 
             // Calculate rows and columns to perfectly fit the canvas
             const cols = Math.floor((canvas.width - SPACING) / SPACING);
@@ -135,8 +137,6 @@
                     drawCircle(x, y, type);
                 }
             }
-
-            return bgColor; // Return the final background color
         }
 
         // Refresh button functionality
@@ -146,26 +146,10 @@
         // Export button functionality
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {
-            const originalWidth = canvas.width;
-            const originalHeight = canvas.height;
-
-            // Temporarily set the canvas to full A4 resolution for export
-            canvas.width = DPI * A4_WIDTH_INCHES;
-            canvas.height = DPI * A4_HEIGHT_INCHES;
-            ctx.scale(1 / SCALE_FACTOR, 1 / SCALE_FACTOR); // Scale up the artwork
-
-            generateArtwork(); // Redraw the artwork at full resolution
-
             const link = document.createElement("a");
             link.download = "generative-artwork.png";
             link.href = canvas.toDataURL("image/png", 1.0); // Full quality
             link.click();
-
-            // Reset canvas size after export
-            canvas.width = originalWidth;
-            canvas.height = originalHeight;
-            ctx.scale(SCALE_FACTOR, SCALE_FACTOR); // Scale back down
-            generateArtwork(); // Redraw for the smaller size
         });
 
         // Generate initial artwork

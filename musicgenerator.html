@@ -12,6 +12,7 @@
             overflow: hidden;
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -63,6 +64,21 @@
             transform: scale(1.1);
             background-color: rgba(255, 255, 255, 0.9);
         }
+
+        #troubleshooting {
+            margin-top: 20px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        #instructions {
+            margin-top: 10px;
+            color: white;
+            font-size: 14px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +86,17 @@
         <h1>Ambient Music Generator</h1>
         <p>Click "Generate" to begin a unique, never-ending soundscape.</p>
         <button id="playButton">Generate</button>
+        <div id="troubleshooting">Troubleshooting</div>
+        <div id="instructions">
+            <p><strong>If you're using Safari:</strong></p>
+            <ol>
+                <li>Go to Safari > Preferences (or Settings on mobile).</li>
+                <li>Click on the "Websites" tab.</li>
+                <li>Find "Auto-Play" in the left-hand menu.</li>
+                <li>Locate this website in the list and set "Auto-Play" to "Allow All Auto-Play."</li>
+                <li>Refresh the page and try again.</li>
+            </ol>
+        </div>
     </div>
 
     <script>
@@ -137,6 +164,11 @@
                 }
             };
         }
+
+        document.getElementById('troubleshooting').addEventListener('click', function () {
+            const instructions = document.getElementById('instructions');
+            instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+        });
     </script>
 </body>
 </html>

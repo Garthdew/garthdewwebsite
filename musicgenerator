@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambient Music Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styling */
+        .music-generator {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .info h1, .info p {
+            margin: 0;
+            padding: 0;
+        }
+
+        #playButton {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            color: black;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar will load here -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("sidebar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.body.insertAdjacentHTML("afterbegin", data);
+                });
+        });
+    </script>
+
+    <div class="content">
+        <div class="music-generator">
+            <div class="info">
+                <h1>Ambient Music Generator</h1>
+                <p>A generative music experiment using HTML and JavaScript.</p>
+                <p>When you click 'Generate,' random chords are triggered to create a unique soundscape.</p>
+                <p>Built by <a href="https://garthdew.com">Garth Dew</a>.</p>
+            </div>
+            <button id="playButton">Generate</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const compressor = audioContext.createDynamicsCompressor();
+            compressor.threshold.setValueAtTime(-50, audioContext.currentTime);
+            compressor.knee.setValueAtTime(40, audioContext.currentTime);
+            compressor.ratio.setValueAtTime(12, audioContext.currentTime);
+            compressor.attack.setValueAtTime(0, audioContext.currentTime);
+            compressor.release.setValueAtTime(0.25, audioContext.currentTime);
+            compressor.connect(audioContext.destination);
+
+            const chords = [
+                'audio/chord1.mp3',
+                'audio/chord2.mp3',
+                'audio/chord3.mp3',
+                'audio/chord4.mp3',
+                'audio/chord5.mp3',
+                'audio/chord6.mp3',
+                'audio/chord7.mp3',
+                'audio/chord8.mp3',
+            ];
+
+            let playing = false;
+
+            function playRandomChord() {
+                if (!playing) return;
+
+                const randomIndex = Math.floor(Math.random() * chords.length);
+                const audio = new Audio(chords[randomIndex]);
+                const source = audioContext.createMediaElementSource(audio);
+                source.connect(compressor);
+                audio.play();
+
+                const randomInterval = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
+                setTimeout(playRandomChord, randomInterval);
+            }
+
+            function startMusic() {
+                if (!playing) {
+                    playing = true;
+                    playRandomChord();
+                }
+            }
+
+            function stopMusic() {
+                playing = false;
+            }
+
+            document.getElementById('playButton').addEventListener('click', function() {
+                if (playing) {
+                    stopMusic();
+                    this.textContent = 'Generate';
+                } else {
+                    // Handle audio context suspension on mobile
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume().then(() => {
+                            startMusic();
+                        });
+                    } else {
+                        startMusic();
+                    }
+                    this.textContent = 'Stop';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

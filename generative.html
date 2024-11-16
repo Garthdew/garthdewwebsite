@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Art - Layered Dice Rolls</title>
+    <title>Generative Art - Uniform Circles</title>
     <style>
         body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            background-color: #f0f0f0;
+            background-color: #222;
             margin: 0;
             height: 100vh;
             overflow: hidden;
         }
         canvas {
             display: block;
-            background-color: white;
-            border: 1px solid #ccc;
+            background-color: black;
+            margin: 20px 0;
+            border: 1px solid white;
         }
         button {
-            margin-top: 20px;
+            margin: 5px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
@@ -30,7 +30,8 @@
 </head>
 <body>
     <canvas id="artCanvas"></canvas>
-    <button id="rollButton">Roll the Dice</button>
+    <button id="refreshButton">Refresh Artwork</button>
+    <button id="exportButton">Export High-Res</button>
 
     <script>
         // Constants for A4 size at 300 DPI
@@ -44,78 +45,76 @@
         canvas.width = DPI * A4_WIDTH_INCHES; // A4 width in pixels
         canvas.height = DPI * A4_HEIGHT_INCHES; // A4 height in pixels
 
-        // Divide canvas into 6 areas
-        const areas = [
-            { x: 0, y: 0, width: canvas.width / 2, height: canvas.height / 3 },
-            { x: canvas.width / 2, y: 0, width: canvas.width / 2, height: canvas.height / 3 },
-            { x: 0, y: canvas.height / 3, width: canvas.width / 2, height: canvas.height / 3 },
-            { x: canvas.width / 2, y: canvas.height / 3, width: canvas.width / 2, height: canvas.height / 3 },
-            { x: 0, y: (canvas.height / 3) * 2, width: canvas.width / 2, height: canvas.height / 3 },
-            { x: canvas.width / 2, y: (canvas.height / 3) * 2, width: canvas.width / 2, height: canvas.height / 3 },
-        ];
+        // Circle parameters
+        const CIRCLE_RADIUS = 50; // Radius of circles
+        const SPACING = 150; // Spacing between circle centers
 
-        // Function to generate a random number (1-6)
-        function rollDice() {
-            return Math.floor(Math.random() * 6) + 1;
+        // Function to clear the canvas and set a black background
+        function clearCanvas() {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        // Function to draw dots
-        function drawDots(numDots, color, area) {
-            const { x, y, width, height } = areas[area - 1];
+        // Function to draw a single circle
+        function drawCircle(x, y, type) {
+            ctx.beginPath();
+            ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
 
-            for (let i = 0; i < numDots * 20; i++) { // Increase multiplier for larger clusters
-                const dotX = x + Math.random() * width;
-                const dotY = y + Math.random() * height;
-                const radius = Math.random() * 15 + 10; // Larger dots (10–25px radius)
-
+            if (type === 1) {
+                // Solid white circle
+                ctx.fillStyle = "white";
+                ctx.fill();
+            } else if (type === 2) {
+                // White stroke circle
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 10;
+                ctx.stroke();
+            } else if (type === 3) {
+                // Half-filled white circle with white stroke
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 10;
+                ctx.stroke();
+                ctx.fillStyle = "white";
                 ctx.beginPath();
-                ctx.arc(dotX, dotY, radius, 0, Math.PI * 2);
-
-                switch (color) {
-                    case 1:
-                        ctx.fillStyle = `rgba(255, 0, 0, 0.6)`; // Red
-                        break;
-                    case 2:
-                        ctx.fillStyle = `rgba(0, 255, 0, 0.6)`; // Green
-                        break;
-                    case 3:
-                        ctx.fillStyle = `rgba(0, 0, 255, 0.6)`; // Blue
-                        break;
-                    case 4:
-                        ctx.fillStyle = `rgba(255, 255, 0, 0.6)`; // Yellow
-                        break;
-                    case 5:
-                        ctx.fillStyle = `rgba(255, 0, 255, 0.6)`; // Magenta
-                        break;
-                    case 6:
-                        ctx.fillStyle = `rgba(0, 255, 255, 0.6)`; // Cyan
-                        break;
-                }
-
+                ctx.arc(x, y, CIRCLE_RADIUS, -Math.PI / 2, Math.PI / 2);
+                ctx.lineTo(x, y);
                 ctx.fill();
             }
         }
 
-        // Initialize round counter
-        let round = 0;
+        // Function to generate uniform circles
+        function generateArtwork() {
+            clearCanvas();
 
-        // Handle dice roll button click
-        const rollButton = document.getElementById("rollButton");
-        rollButton.addEventListener("click", () => {
-            if (round < 6) {
-                const numDots = rollDice(); // Determines number of dots
-                const color = rollDice(); // Determines color
-                const area = rollDice(); // Determines area of the canvas
+            const rows = Math.floor(canvas.height / SPACING);
+            const cols = Math.floor(canvas.width / SPACING);
 
-                drawDots(numDots, color, area);
-                round++;
+            for (let row = 0; row <= rows; row++) {
+                for (let col = 0; col <= cols; col++) {
+                    const x = col * SPACING + SPACING / 2;
+                    const y = row * SPACING + SPACING / 2;
 
-                if (round === 6) {
-                    rollButton.disabled = true; // Disable button after 6 rounds
-                    rollButton.innerText = "Artwork Complete!";
+                    const type = Math.floor(Math.random() * 3) + 1; // Random type (1, 2, or 3)
+                    drawCircle(x, y, type);
                 }
             }
+        }
+
+        // Refresh button functionality
+        const refreshButton = document.getElementById("refreshButton");
+        refreshButton.addEventListener("click", generateArtwork);
+
+        // Export button functionality
+        const exportButton = document.getElementById("exportButton");
+        exportButton.addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.download = "generative-artwork.png";
+            link.href = canvas.toDataURL("image/png", 1.0); // Full quality
+            link.click();
         });
+
+        // Generate initial artwork
+        generateArtwork();
     </script>
 </body>
 </html>

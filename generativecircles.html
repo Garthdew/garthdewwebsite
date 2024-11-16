@@ -88,42 +88,26 @@
         const CIRCLE_RADIUS = 40; // Radius of circles
         const SPACING = CIRCLE_RADIUS * 2 + 20; // Uniform spacing based on radius
         const STROKE_WIDTH = 3; // Stroke width
+        const SHAPE_COLOR = "#D3D3D3"; // Light gray color for all shapes
 
-        // Primary colors for circles
-        const PRIMARY_COLORS = ["#FF0000", "#0000FF", "#FFFF00"]; // Red, Blue, Yellow
-
-        // Function to get a random color
-        function getRandomPrimaryColor() {
-            return PRIMARY_COLORS[Math.floor(Math.random() * PRIMARY_COLORS.length)];
-        }
-
-        // Function to get a random background color (black or white)
-        function getRandomBackgroundColor() {
-            return Math.random() < 0.5 ? "black" : "white";
-        }
-
-        // Function to clear the canvas and set a random background color
+        // Function to clear the canvas and set a white background
         function clearCanvas() {
-            const bgColor = getRandomBackgroundColor();
-            ctx.fillStyle = bgColor;
+            ctx.fillStyle = "white";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            return bgColor; // Return background color for later use
         }
 
         // Function to draw a single circle
         function drawCircle(x, y, type) {
-            const color = getRandomPrimaryColor();
-
             ctx.beginPath();
             ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
 
             if (type === "solid") {
                 // Solid circle
-                ctx.fillStyle = color;
+                ctx.fillStyle = SHAPE_COLOR;
                 ctx.fill();
             } else if (type === "stroke") {
                 // Stroke circle
-                ctx.strokeStyle = color;
+                ctx.strokeStyle = SHAPE_COLOR;
                 ctx.lineWidth = STROKE_WIDTH;
                 ctx.stroke();
             }
@@ -131,7 +115,7 @@
 
         // Function to generate uniform circles
         function generateArtwork() {
-            clearCanvas(); // Clear canvas with a random background color
+            clearCanvas(); // Clear canvas with a white background
 
             // Calculate rows and columns to perfectly fit the canvas
             const cols = Math.floor((canvas.width - SPACING) / SPACING);

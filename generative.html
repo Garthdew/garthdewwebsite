@@ -3,50 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Art - Neon Circles</title>
+    <title>Generative Art - Uniform Circles</title>
     <style>
         body {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            flex-direction: column;
             background-color: #222;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             height: 100vh;
-            box-sizing: border-box;
+            overflow: hidden;
         }
         #frame {
+            position: relative;
             background-color: white;
             border: 20px solid white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
         canvas {
             display: block;
         }
+        .buttons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 20px;
+            opacity: 0.5;
+        }
         button {
-            margin: 10px;
+            background-color: white;
+            color: black;
+            border: none;
             padding: 10px 20px;
             font-size: 16px;
+            font-family: Arial, sans-serif;
             cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        button:hover {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
     <div id="frame">
         <canvas id="artCanvas"></canvas>
+        <div class="buttons">
+            <button id="refreshButton">Refresh Artwork</button>
+            <button id="exportButton">Export High-Res</button>
+        </div>
     </div>
-    <button id="refreshButton">Refresh Artwork</button>
-    <button id="exportButton">Export High-Res</button>
 
     <script>
-        // Constants for A4 Landscape size at 300 DPI
+        // Constants for A4 Portrait size at 300 DPI
         const DPI = 300;
-        const A4_WIDTH_INCHES = 11.69; // Width in inches (landscape)
-        const A4_HEIGHT_INCHES = 8.27; // Height in inches (landscape)
+        const A4_WIDTH_INCHES = 8.27; // Width in inches (portrait)
+        const A4_HEIGHT_INCHES = 11.69; // Height in inches (portrait)
 
         // Set up the canvas
         const canvas = document.getElementById("artCanvas");
@@ -56,26 +72,15 @@
 
         // Adjust the frame dimensions to maintain aspect ratio
         const frame = document.getElementById("frame");
-        const aspectRatio = canvas.width / canvas.height;
-        frame.style.width = "80vw"; // Scale to 80% of viewport width
-        frame.style.height = `${80 / aspectRatio}vw`; // Maintain aspect ratio
+        frame.style.width = "80vh"; // Scale to fit vertically
+        frame.style.height = `${80 * (canvas.height / canvas.width)}vh`; // Maintain aspect ratio
 
         canvas.style.width = "100%";
         canvas.style.height = "100%";
 
         // Circle parameters
-        const CIRCLE_RADIUS = 75; // Radius of circles
-        const SPACING = CIRCLE_RADIUS * 2 + 50; // Uniform spacing based on radius
-
-        // Neon colors
-        const NEON_COLORS = [
-            "#FF00FF", // Neon pink
-            "#00FFFF", // Neon cyan
-            "#FFFF00", // Neon yellow
-            "#FF4500", // Neon orange
-            "#ADFF2F", // Neon green
-            "#7FFF00"  // Neon lime
-        ];
+        const CIRCLE_RADIUS = 50; // Radius of circles
+        const SPACING = CIRCLE_RADIUS * 2 + 20; // Uniform spacing based on radius
 
         // Function to clear the canvas and set a black background
         function clearCanvas() {
@@ -85,20 +90,17 @@
 
         // Function to draw a single circle
         function drawCircle(x, y, type) {
-            const color = NEON_COLORS[Math.floor(Math.random() * NEON_COLORS.length)];
+            ctx.beginPath();
+            ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
 
             if (type === "solid") {
-                // Solid neon circle
-                ctx.fillStyle = color;
-                ctx.beginPath();
-                ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
+                // Solid white circle
+                ctx.fillStyle = "white";
                 ctx.fill();
             } else if (type === "stroke") {
-                // Neon stroke circle
-                ctx.strokeStyle = color;
+                // White stroke circle
+                ctx.strokeStyle = "white";
                 ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
                 ctx.stroke();
             }
         }
@@ -108,15 +110,15 @@
             clearCanvas();
 
             // Calculate rows and columns to perfectly fit the canvas
-            const cols = Math.floor((canvas.width - CIRCLE_RADIUS) / SPACING);
-            const rows = Math.floor((canvas.height - CIRCLE_RADIUS) / SPACING);
+            const cols = Math.floor((canvas.width - SPACING) / SPACING);
+            const rows = Math.floor((canvas.height - SPACING) / SPACING);
             const offsetX = (canvas.width - cols * SPACING) / 2; // Center horizontally
             const offsetY = (canvas.height - rows * SPACING) / 2; // Center vertically
 
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < cols; col++) {
-                    const x = col * SPACING + offsetX + CIRCLE_RADIUS;
-                    const y = row * SPACING + offsetY + CIRCLE_RADIUS;
+                    const x = col * SPACING + offsetX + SPACING / 2;
+                    const y = row * SPACING + offsetY + SPACING / 2;
 
                     const type = Math.random() < 0.5 ? "solid" : "stroke"; // Random type
                     drawCircle(x, y, type);

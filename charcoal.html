@@ -83,6 +83,7 @@
 
         const TOTAL_MARKS = 100000;
         const MARK_COLOR = "#000000";
+        const MARK_RADIUS = 10; // Increased radius for larger marks
 
         function clearCanvas() {
             ctx.fillStyle = "#FFFFFF";
@@ -92,7 +93,7 @@
         function drawCharcoalMark(x, y) {
             ctx.fillStyle = MARK_COLOR;
             ctx.beginPath();
-            ctx.arc(x, y, 1, 0, Math.PI * 2); // Each mark is a small dot
+            ctx.arc(x, y, MARK_RADIUS, 0, Math.PI * 2); // Increased the radius
             ctx.fill();
         }
 
@@ -121,4 +122,3 @@
     </script>
 </body>
 </html>
-

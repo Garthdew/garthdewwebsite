@@ -3,62 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Art - Random Dots</title>
+    <title>Generative Art - Randomized A4 Canvas</title>
     <style>
         body {
-            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #f0f0f0;
+            margin: 0;
             height: 100vh;
-            background-color: #333;
+            overflow: hidden;
         }
         canvas {
             display: block;
-            background-color: #fff;
+            background-color: white;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
-    <canvas id="dotsCanvas"></canvas>
+    <canvas id="artCanvas"></canvas>
 
     <script>
-        // Setup the canvas
-        const canvas = document.getElementById("dotsCanvas");
+        // Constants for A4 size at 300 DPI
+        const DPI = 300;
+        const A4_WIDTH_INCHES = 8.27; // Width in inches
+        const A4_HEIGHT_INCHES = 11.69; // Height in inches
+
+        // Set up the canvas
+        const canvas = document.getElementById("artCanvas");
         const ctx = canvas.getContext("2d");
+        canvas.width = DPI * A4_WIDTH_INCHES; // A4 width in pixels
+        canvas.height = DPI * A4_HEIGHT_INCHES; // A4 height in pixels
 
-        // Set canvas to full screen
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Divide canvas into 6 areas
+        const areas = [
+            { x: 0, y: 0, width: canvas.width / 2, height: canvas.height / 3 },
+            { x: canvas.width / 2, y: 0, width: canvas.width / 2, height: canvas.height / 3 },
+            { x: 0, y: canvas.height / 3, width: canvas.width / 2, height: canvas.height / 3 },
+            { x: canvas.width / 2, y: canvas.height / 3, width: canvas.width / 2, height: canvas.height / 3 },
+            { x: 0, y: (canvas.height / 3) * 2, width: canvas.width / 2, height: canvas.height / 3 },
+            { x: canvas.width / 2, y: (canvas.height / 3) * 2, width: canvas.width / 2, height: canvas.height / 3 },
+        ];
 
-        // Function to generate a random array of dots
-        function generateDots(numDots) {
-            const dots = [];
-            for (let i = 0; i < numDots; i++) {
-                dots.push({
-                    x: Math.random() * canvas.width, // Random x-coordinate
-                    y: Math.random() * canvas.height, // Random y-coordinate
-                    radius: Math.random() * 5 + 2, // Random radius between 2 and 7
-                    color: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.8)` // Random color
-                });
-            }
-            return dots;
+        // Function to generate random numbers
+        function rollDice() {
+            return Math.floor(Math.random() * 6) + 1;
         }
 
-        // Function to draw the dots
-        function drawDots(dots) {
-            dots.forEach(dot => {
+        // Function to draw dots
+        function drawDots(numDots, color, area) {
+            const { x, y, width, height } = areas[area - 1];
+
+            for (let i = 0; i < numDots * 50; i++) {
+                const dotX = x + Math.random() * width;
+                const dotY = y + Math.random() * height;
+                const radius = Math.random() * 5 + 1;
+
                 ctx.beginPath();
-                ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
-                ctx.fillStyle = dot.color;
+                ctx.arc(dotX, dotY, radius, 0, Math.PI * 2);
+
+                switch (color) {
+                    case 1:
+                        ctx.fillStyle = `rgba(255, 0, 0, 0.8)`; // Red
+                        break;
+                    case 2:
+                        ctx.fillStyle = `rgba(0, 255, 0, 0.8)`; // Green
+                        break;
+                    case 3:
+                        ctx.fillStyle = `rgba(0, 0, 255, 0.8)`; // Blue
+                        break;
+                    case 4:
+                        ctx.fillStyle = `rgba(255, 255, 0, 0.8)`; // Yellow
+                        break;
+                    case 5:
+                        ctx.fillStyle = `rgba(255, 0, 255, 0.8)`; // Magenta
+                        break;
+                    case 6:
+                        ctx.fillStyle = `rgba(0, 255, 255, 0.8)`; // Cyan
+                        break;
+                }
+
                 ctx.fill();
-                ctx.closePath();
-            });
+            }
         }
 
-        // Main execution
-        const randomDots = generateDots(500); // Generate 500 random dots
-        drawDots(randomDots);
+        // Function to generate the artwork
+        function generateArtwork() {
+            for (let i = 0; i < 6; i++) {
+                const numDots = rollDice(); // Determines number of dots
+                const color = rollDice(); // Determines color
+                const area = rollDice(); // Determines area of the canvas
+
+                drawDots(numDots, color, area);
+            }
+        }
+
+        // Generate the artwork on load
+        generateArtwork();
     </script>
 </body>
 </html>

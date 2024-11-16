@@ -34,10 +34,10 @@
     <button id="exportButton">Export High-Res</button>
 
     <script>
-        // Constants for A4 size at 300 DPI
+        // Constants for A4 Landscape size at 300 DPI
         const DPI = 300;
-        const A4_WIDTH_INCHES = 8.27; // Width in inches
-        const A4_HEIGHT_INCHES = 11.69; // Height in inches
+        const A4_WIDTH_INCHES = 11.69; // Width in inches (landscape)
+        const A4_HEIGHT_INCHES = 8.27; // Height in inches (landscape)
 
         // Set up the canvas
         const canvas = document.getElementById("artCanvas");
@@ -46,8 +46,8 @@
         canvas.height = DPI * A4_HEIGHT_INCHES; // A4 height in pixels
 
         // Circle parameters
-        const CIRCLE_RADIUS = 50; // Radius of circles
-        const SPACING = 150; // Spacing between circle centers
+        const CIRCLE_RADIUS = 75; // Radius of circles
+        const SPACING = 200; // Spacing between circle centers
 
         // Function to clear the canvas and set a black background
         function clearCanvas() {
@@ -94,8 +94,11 @@
                     const x = col * SPACING + SPACING / 2;
                     const y = row * SPACING + SPACING / 2;
 
-                    const type = Math.floor(Math.random() * 3) + 1; // Random type (1, 2, or 3)
-                    drawCircle(x, y, type);
+                    // Only draw circles fully within the canvas
+                    if (x + CIRCLE_RADIUS <= canvas.width && y + CIRCLE_RADIUS <= canvas.height) {
+                        const type = Math.floor(Math.random() * 3) + 1; // Random type (1, 2, or 3)
+                        drawCircle(x, y, type);
+                    }
                 }
             }
         }

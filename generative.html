@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Art - Uniform Circles</title>
+    <title>Generative Art - Neon Circles</title>
     <style>
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             background-color: #222;
             margin: 0;
+            padding: 20px;
             height: 100vh;
+            box-sizing: border-box;
+        }
+        #frame {
+            background-color: white;
+            border: 20px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
         canvas {
             display: block;
-            background-color: black;
-            margin: 20px 0;
-            border: 1px solid white;
         }
         button {
-            margin: 5px;
+            margin: 10px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
@@ -29,7 +37,9 @@
     </style>
 </head>
 <body>
-    <canvas id="artCanvas"></canvas>
+    <div id="frame">
+        <canvas id="artCanvas"></canvas>
+    </div>
     <button id="refreshButton">Refresh Artwork</button>
     <button id="exportButton">Export High-Res</button>
 
@@ -45,9 +55,27 @@
         canvas.width = DPI * A4_WIDTH_INCHES; // A4 width in pixels
         canvas.height = DPI * A4_HEIGHT_INCHES; // A4 height in pixels
 
+        // Resize the canvas in the browser for full artwork display
+        const frame = document.getElementById("frame");
+        frame.style.width = "80vw"; // Scale to 80% of viewport width
+        frame.style.height = `${(canvas.height / canvas.width) * 80}vw`; // Maintain aspect ratio
+
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+
         // Circle parameters
         const CIRCLE_RADIUS = 75; // Radius of circles
         const SPACING = 200; // Spacing between circle centers
+
+        // Neon colors
+        const NEON_COLORS = [
+            "#FF00FF", // Neon pink
+            "#00FFFF", // Neon cyan
+            "#FFFF00", // Neon yellow
+            "#FF4500", // Neon orange
+            "#ADFF2F", // Neon green
+            "#7FFF00"  // Neon lime
+        ];
 
         // Function to clear the canvas and set a black background
         function clearCanvas() {
@@ -57,28 +85,21 @@
 
         // Function to draw a single circle
         function drawCircle(x, y, type) {
-            ctx.beginPath();
-            ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
+            const color = NEON_COLORS[Math.floor(Math.random() * NEON_COLORS.length)];
 
-            if (type === 1) {
-                // Solid white circle
-                ctx.fillStyle = "white";
-                ctx.fill();
-            } else if (type === 2) {
-                // White stroke circle
-                ctx.strokeStyle = "white";
-                ctx.lineWidth = 10;
-                ctx.stroke();
-            } else if (type === 3) {
-                // Half-filled white circle with white stroke
-                ctx.strokeStyle = "white";
-                ctx.lineWidth = 10;
-                ctx.stroke();
-                ctx.fillStyle = "white";
+            if (type === "solid") {
+                // Solid neon circle
+                ctx.fillStyle = color;
                 ctx.beginPath();
-                ctx.arc(x, y, CIRCLE_RADIUS, -Math.PI / 2, Math.PI / 2);
-                ctx.lineTo(x, y);
+                ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
                 ctx.fill();
+            } else if (type === "stroke") {
+                // Neon stroke circle
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 10;
+                ctx.beginPath();
+                ctx.arc(x, y, CIRCLE_RADIUS, 0, Math.PI * 2);
+                ctx.stroke();
             }
         }
 
@@ -96,7 +117,7 @@
 
                     // Only draw circles fully within the canvas
                     if (x + CIRCLE_RADIUS <= canvas.width && y + CIRCLE_RADIUS <= canvas.height) {
-                        const type = Math.floor(Math.random() * 3) + 1; // Random type (1, 2, or 3)
+                        const type = Math.random() < 0.5 ? "solid" : "stroke"; // Random type
                         drawCircle(x, y, type);
                     }
                 }

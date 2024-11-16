@@ -10,7 +10,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(145deg, #e0e0e0, #f7f7f7);
+            background: linear-gradient(145deg, #c0c0c0, #e0e0e0); /* Grey background */
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -88,7 +88,7 @@
         const CIRCLE_RADIUS = 40;
         const SPACING = CIRCLE_RADIUS * 2 + 20; // Uniform spacing based on radius
         const STROKE_WIDTH = 3;
-        const COLORS = ["#FF0000", "#0000FF", "#FFFF00"]; // Primary colors
+        const COLORS = ["#FF0000", "#0000FF", "#CCCC00"]; // Red, Blue, Darker Yellow
 
         // Function to get a random color
         function getRandomColor() {
@@ -97,7 +97,7 @@
 
         // Function to clear the canvas
         function clearCanvas() {
-            ctx.fillStyle = "#FFFFFF"; // White background
+            ctx.fillStyle = "#F0F0F0"; // Light grey background for the canvas
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 

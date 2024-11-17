@@ -81,7 +81,7 @@
         canvas.width = DPI * A3_WIDTH_INCHES;
         canvas.height = DPI * A3_HEIGHT_INCHES;
 
-        const COLORS = ["#BD9391", "#91B7C7", "#6CBEED"]; // Updated colors
+        const COLORS = ["#F75C03", "#8FF7A7", "#51BBFE"]; // Updated colors
         const OPACITIES = [0.25, 0.5, 0.75];
         const SIZES_INCHES = [1, 2, 3];
         const BACKGROUND_COLOR = "#FFFFFF";
@@ -126,7 +126,7 @@
 
             // Ensure the texture is loaded before generating artwork
             if (texture.complete) {
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 25; i++) { // Reduced to 25 circles
                     // Randomly determine circle properties
                     const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
                     const colorIndex = Math.floor(Math.random() * 3); // Updated colors

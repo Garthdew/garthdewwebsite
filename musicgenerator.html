@@ -16,9 +16,6 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-        }
-
-        body {
             background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
             background-size: 300% 300%;
             animation: backgroundAnimation 8s ease infinite;
@@ -46,23 +43,30 @@
             margin-bottom: 20px;
         }
 
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
         #playButton {
             background-color: rgba(255, 255, 255, 0.8);
-            border: none;
             color: black;
-            padding: 20px;
-            border-radius: 50%;
-            cursor: pointer;
             font-size: 18px;
-            width: 120px;
-            height: 120px;
             transition: transform 0.3s ease, background-color 0.3s ease;
-            margin: 0 auto;
         }
 
         #playButton:hover {
             transform: scale(1.1);
             background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        #countdown {
+            font-size: 24px;
+            margin-top: 20px;
         }
 
         #troubleshooting {
@@ -82,10 +86,14 @@
     </style>
 </head>
 <body>
+
     <div class="music-generator">
         <h1>Ambient Music Generator</h1>
-        <p>Click "Generate" to begin a unique, never-ending soundscape.</p>
+        <p>Set the timer and click "Generate" to create a soundscape.</p>
+        <label for="duration">Duration (minutes):</label>
+        <input type="number" id="duration" min="1" max="60" value="5">
         <button id="playButton">Generate</button>
+        <div id="countdown"></div>
         <div id="troubleshooting">Troubleshooting</div>
         <div id="instructions">
             <p><strong>If you're using Safari:</strong></p>
@@ -100,74 +108,100 @@
     </div>
 
     <script>
-        let audioContext;
-        let audioBuffers = [];
-        let playing = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const compressor = audioContext.createDynamicsCompressor();
+            compressor.threshold.setValueAtTime(-50, audioContext.currentTime);
+            compressor.knee.setValueAtTime(40, audioContext.currentTime);
+            compressor.ratio.setValueAtTime(12, audioContext.currentTime);
+            compressor.attack.setValueAtTime(0, audioContext.currentTime);
+            compressor.release.setValueAtTime(0.25, audioContext.currentTime);
+            compressor.connect(audioContext.destination);
 
-        const chords = [
-            'audio/chord1.mp3',
-            'audio/chord2.mp3',
-            'audio/chord3.mp3',
-            'audio/chord4.mp3',
-            'audio/chord5.mp3',
-            'audio/chord6.mp3',
-            'audio/chord7.mp3',
-            'audio/chord8.mp3',
-        ];
+            const chords = [
+                'audio/chord1.mp3',
+                'audio/chord2.mp3',
+                'audio/chord3.mp3',
+                'audio/chord4.mp3',
+                'audio/chord5.mp3',
+                'audio/chord6.mp3',
+                'audio/chord7.mp3',
+                'audio/chord8.mp3',
+            ];
 
-        document.getElementById('playButton').addEventListener('click', async function () {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                await loadAudioBuffers();
+            let playing = false;
+            let timer = null;
+            let countdownInterval = null;
+
+            function playRandomChord() {
+                if (!playing) return;
+
+                const randomIndex = Math.floor(Math.random() * chords.length);
+                const audio = new Audio(chords[randomIndex]);
+                const source = audioContext.createMediaElementSource(audio);
+                source.connect(compressor);
+                audio.play();
+
+                const randomInterval = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
+                setTimeout(playRandomChord, randomInterval);
             }
 
-            if (audioContext.state === 'suspended') {
-                await audioContext.resume();
+            function startCountdown(duration) {
+                const countdown = document.getElementById('countdown');
+                let remainingTime = duration * 60; // Convert minutes to seconds
+
+                countdownInterval = setInterval(() => {
+                    if (remainingTime <= 0) {
+                        clearInterval(countdownInterval);
+                        countdown.textContent = 'Time’s up!';
+                    } else {
+                        const minutes = Math.floor(remainingTime / 60);
+                        const seconds = remainingTime % 60;
+                        countdown.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                        remainingTime--;
+                    }
+                }, 1000);
             }
 
-            if (!playing) {
+            function startMusic(duration) {
                 playing = true;
                 playRandomChord();
-                this.textContent = 'Stop';
-            } else {
+                startCountdown(duration);
+
+                timer = setTimeout(() => {
+                    stopMusic();
+                }, duration * 60 * 1000); // Convert minutes to milliseconds
+            }
+
+            function stopMusic() {
                 playing = false;
-                this.textContent = 'Generate';
+                clearTimeout(timer);
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').textContent = '';
             }
-        });
 
-        async function loadAudioBuffers() {
-            const promises = chords.map(url => fetch(url)
-                .then(response => response.arrayBuffer())
-                .then(data => audioContext.decodeAudioData(data))
-            );
+            document.getElementById('playButton').addEventListener('click', function() {
+                const duration = parseInt(document.getElementById('duration').value, 10);
 
-            try {
-                audioBuffers = await Promise.all(promises);
-                console.log('Audio files loaded and decoded.');
-            } catch (error) {
-                console.error('Error loading audio files:', error);
-            }
-        }
-
-        function playRandomChord() {
-            if (!playing) return;
-
-            const randomIndex = Math.floor(Math.random() * audioBuffers.length);
-            const bufferSource = audioContext.createBufferSource();
-            bufferSource.buffer = audioBuffers[randomIndex];
-            bufferSource.connect(audioContext.destination);
-            bufferSource.start();
-
-            bufferSource.onended = () => {
                 if (playing) {
-                    setTimeout(playRandomChord, Math.random() * 4000 + 1000); // 1-5 seconds interval
+                    stopMusic();
+                    this.textContent = 'Generate';
+                } else {
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume().then(() => {
+                            startMusic(duration);
+                        });
+                    } else {
+                        startMusic(duration);
+                    }
+                    this.textContent = 'Stop';
                 }
-            };
-        }
+            });
 
-        document.getElementById('troubleshooting').addEventListener('click', function () {
-            const instructions = document.getElementById('instructions');
-            instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('troubleshooting').addEventListener('click', function () {
+                const instructions = document.getElementById('instructions');
+                instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+            });
         });
     </script>
 </body>

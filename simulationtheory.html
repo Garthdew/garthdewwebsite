@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Art</title>
+    <title>Generative Circle Art</title>
     <style>
         body {
             display: flex;
@@ -72,8 +72,8 @@
 
     <script>
         const DPI = 300;
-        const A3_WIDTH_INCHES = 11.69; // Width of A3 in inches
-        const A3_HEIGHT_INCHES = 16.54; // Height of A3 in inches
+        const A3_WIDTH_INCHES = 11.69;
+        const A3_HEIGHT_INCHES = 16.54;
 
         const canvas = document.getElementById("artCanvas");
         const ctx = canvas.getContext("2d");
@@ -81,79 +81,47 @@
         canvas.width = DPI * A3_WIDTH_INCHES;
         canvas.height = DPI * A3_HEIGHT_INCHES;
 
-        const BACKGROUND_COLOR = "#FFFFFF";
-
         const COLORS = ["blue", "red", "yellow"];
-        const OPACITIES = [0.33, 0.66, 0.95];
-        const SHAPES = ["triangle", "circle", "square"];
+        const OPACITIES = [0.25, 0.5, 0.75];
+        const SIZES_INCHES = [1, 2, 3];
+        const BACKGROUND_COLOR = "#FFFFFF";
 
         function clearCanvas() {
             ctx.fillStyle = BACKGROUND_COLOR;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        function drawCircle(x, y, size, color, opacity) {
+        function drawCircle(x, y, radius, color, opacity) {
             ctx.beginPath();
-            ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fillStyle = color;
             ctx.globalAlpha = opacity;
             ctx.fill();
-        }
-
-        function drawSquare(x, y, size, color, opacity) {
-            ctx.fillStyle = color;
-            ctx.globalAlpha = opacity;
-            ctx.fillRect(x - size / 2, y - size / 2, size, size);
-        }
-
-        function drawTriangle(x, y, size, color, opacity) {
-            ctx.beginPath();
-            ctx.moveTo(x, y - size / 2);
-            ctx.lineTo(x - size / 2, y + size / 2);
-            ctx.lineTo(x + size / 2, y + size / 2);
-            ctx.closePath();
-            ctx.fillStyle = color;
-            ctx.globalAlpha = opacity;
-            ctx.fill();
-        }
-
-        function generateShapes(shape, color, numberOfShapes, opacity) {
-            for (let i = 0; i < numberOfShapes; i++) {
-                const size = Math.random() * 200 + 50; // Random size between 50 and 250
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-
-                switch (shape) {
-                    case "circle":
-                        drawCircle(x, y, size, color, opacity);
-                        break;
-                    case "square":
-                        drawSquare(x, y, size, color, opacity);
-                        break;
-                    case "triangle":
-                        drawTriangle(x, y, size, color, opacity);
-                        break;
-                }
-            }
         }
 
         function generateArtwork() {
             clearCanvas();
 
-            for (let layer = 0; layer < 3; layer++) {
-                const shapeIndex = Math.floor(Math.random() * 3); // Shape (1, 2, 3)
-                const colorIndex = Math.floor(Math.random() * 3); // Color (1, 2, 3)
-                const numberOfShapes = [10, 20, 30][Math.floor(Math.random() * 3)]; // Number of shapes
-                const opacity = OPACITIES[Math.floor(Math.random() * 3)]; // Opacity (33%, 66%, 95%)
+            for (let i = 0; i < 100; i++) {
+                // Randomly determine circle properties
+                const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
+                const colorIndex = Math.floor(Math.random() * 3); // Blue, Red, Yellow
+                const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
 
-                const shape = SHAPES[shapeIndex];
+                const radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
                 const color = COLORS[colorIndex];
+                const opacity = OPACITIES[opacityIndex];
 
-                generateShapes(shape, color, numberOfShapes, opacity);
+                // Random position, ensuring the circle stays within the canvas
+                const x = Math.random() * (canvas.width - 2 * radius) + radius;
+                const y = Math.random() * (canvas.height - 2 * radius) + radius;
+
+                // Draw the circle
+                drawCircle(x, y, radius, color, opacity);
             }
 
-            // Reset global alpha for any other operations
+            // Reset global alpha for other operations
             ctx.globalAlpha = 1.0;
         }
 
@@ -163,7 +131,7 @@
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {
             const link = document.createElement("a");
-            link.download = "generative-artwork.png";
+            link.download = "circle-artwork.png";
             link.href = canvas.toDataURL("image/png", 1.0);
             link.click();
         });

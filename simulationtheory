@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation Theory Art</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #frame {
+            background: #ffffff;
+            border: 10px solid #c0c0c0;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2), inset 0px 5px 10px rgba(255, 255, 255, 0.5);
+            width: 30%;
+            aspect-ratio: 11.69 / 8.27;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        canvas {
+            width: 95%;
+            height: 95%;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            color: #333;
+            border: 2px solid #ddd;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <div id="frame">
+        <canvas id="artCanvas"></canvas>
+    </div>
+    <div class="buttons">
+        <button id="refreshButton">Generate Artwork</button>
+        <button id="exportButton">Export High-Res</button>
+    </div>
+
+    <script>
+        const DPI = 300;
+        const A3_WIDTH_INCHES = 11.69;
+        const A3_HEIGHT_INCHES = 16.54;
+
+        const canvas = document.getElementById("artCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = DPI * A3_WIDTH_INCHES;
+        canvas.height = DPI * A3_HEIGHT_INCHES;
+
+        const STROKE_WIDTH = 5;
+        const BACKGROUND_COLOR = "#FFFFFF";
+        const STROKE_COLOR = "#000000";
+        const MIN_SHAPE_SIZE = 1; // Minimum size for shapes before stopping
+
+        function clearCanvas() {
+            ctx.fillStyle = BACKGROUND_COLOR;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawCircle(x, y, radius) {
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function drawSquare(x, y, size) {
+            ctx.strokeRect(x - size / 2, y - size / 2, size, size);
+        }
+
+        function drawTriangle(x, y, size) {
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 2);
+            ctx.lineTo(x - size / 2, y + size / 2);
+            ctx.lineTo(x + size / 2, y + size / 2);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function drawShapeRecursive(x, y, size, shape) {
+            if (size < MIN_SHAPE_SIZE) return;
+
+            ctx.strokeStyle = STROKE_COLOR;
+            ctx.lineWidth = STROKE_WIDTH;
+
+            switch (shape) {
+                case "circle":
+                    drawCircle(x, y, size / 2);
+                    break;
+                case "square":
+                    drawSquare(x, y, size);
+                    break;
+                case "triangle":
+                    drawTriangle(x, y, size);
+                    break;
+            }
+
+            // Shrink shape and recursively draw again
+            drawShapeRecursive(x, y, size * 0.8, shape);
+        }
+
+        function generateArtwork() {
+            clearCanvas();
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            const shapes = ["circle", "square", "triangle"];
+            const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+
+            drawShapeRecursive(centerX, centerY, canvas.width * 0.4, randomShape);
+        }
+
+        const refreshButton = document.getElementById("refreshButton");
+        refreshButton.addEventListener("click", generateArtwork);
+
+        const exportButton = document.getElementById("exportButton");
+        exportButton.addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.download = "simulation-theory-artwork.png";
+            link.href = canvas.toDataURL("image/png", 1.0);
+            link.click();
+        });
+
+        generateArtwork();
+    </script>
+</body>
+</html>

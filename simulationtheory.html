@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Circle Art</title>
+    <title>Generative Circle Art with Texture</title>
     <style>
         body {
             display: flex;
@@ -86,43 +86,64 @@
         const SIZES_INCHES = [1, 2, 3];
         const BACKGROUND_COLOR = "#FFFFFF";
 
+        // Texture image
+        const texture = new Image();
+        texture.src = 'https://www.transparenttextures.com/patterns/asfalt-light.png'; // Replace with your texture URL
+
         function clearCanvas() {
             ctx.fillStyle = BACKGROUND_COLOR;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        function drawCircle(x, y, radius, color, opacity) {
+        function drawTexturedCircle(x, y, radius, color, opacity) {
+            // Draw the circle
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fillStyle = color;
             ctx.globalAlpha = opacity;
             ctx.fill();
+
+            // Clip to the circle
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.clip();
+
+            // Draw the texture inside the circle
+            ctx.globalAlpha = opacity; // Match texture opacity with circle opacity
+            const pattern = ctx.createPattern(texture, 'repeat');
+            ctx.fillStyle = pattern;
+            ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+
+            // Restore context state
+            ctx.restore();
         }
 
         function generateArtwork() {
-            clearCanvas();
+            // Ensure the texture is loaded before generating artwork
+            texture.onload = () => {
+                clearCanvas();
 
-            for (let i = 0; i < 100; i++) {
-                // Randomly determine circle properties
-                const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
-                const colorIndex = Math.floor(Math.random() * 3); // Blue, Red, Yellow
-                const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
+                for (let i = 0; i < 100; i++) {
+                    // Randomly determine circle properties
+                    const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
+                    const colorIndex = Math.floor(Math.random() * 3); // Blue, Red, Yellow
+                    const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
 
-                const radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
-                const color = COLORS[colorIndex];
-                const opacity = OPACITIES[opacityIndex];
+                    const radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
+                    const color = COLORS[colorIndex];
+                    const opacity = OPACITIES[opacityIndex];
 
-                // Random position, ensuring the circle stays within the canvas
-                const x = Math.random() * (canvas.width - 2 * radius) + radius;
-                const y = Math.random() * (canvas.height - 2 * radius) + radius;
+                    // Random position, ensuring the circle stays within the canvas
+                    const x = Math.random() * (canvas.width - 2 * radius) + radius;
+                    const y = Math.random() * (canvas.height - 2 * radius) + radius;
 
-                // Draw the circle
-                drawCircle(x, y, radius, color, opacity);
-            }
-
-            // Reset global alpha for other operations
-            ctx.globalAlpha = 1.0;
+                    // Draw the textured circle
+                    drawTexturedCircle(x, y, radius, color, opacity);
+                }
+            };
         }
 
         const refreshButton = document.getElementById("refreshButton");
@@ -131,7 +152,7 @@
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {
             const link = document.createElement("a");
-            link.download = "circle-artwork.png";
+            link.download = "textured-circle-artwork.png";
             link.href = canvas.toDataURL("image/png", 1.0);
             link.click();
         });

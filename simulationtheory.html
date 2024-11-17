@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generative Circle Art with Texture</title>
+    <title>Uniform Grid Circles</title>
     <style>
         body {
             display: flex;
@@ -82,88 +82,48 @@
         canvas.height = DPI * A3_HEIGHT_INCHES;
 
         const COLORS = ["#F75C03", "#8FF7A7", "#51BBFE"]; // Updated colors
-        const OPACITIES = [0.25, 0.5, 0.75];
-        const SIZES_INCHES = [1, 2, 3];
         const BACKGROUND_COLOR = "#FFFFFF";
-
-        // Texture image
-        const texture = new Image();
-        texture.src = 'https://www.transparenttextures.com/patterns/asfalt-light.png'; // Replace with your texture URL
+        const COLUMNS = 8; // Number of circles horizontally
+        const ROWS = 10; // Number of circles vertically
+        const STROKE_WIDTH = 5;
 
         function clearCanvas() {
             ctx.fillStyle = BACKGROUND_COLOR;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        function circlesOverlap(x1, y1, r1, x2, y2, r2) {
-            const dx = x2 - x1;
-            const dy = y2 - y1;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            return distance < r1 + r2;
-        }
-
-        function drawTexturedCircle(x, y, radius, color, opacity) {
-            // Draw the circle
+        function drawCircle(x, y, radius, color, isSolid) {
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, Math.PI * 2);
             ctx.closePath();
-            ctx.fillStyle = color;
-            ctx.globalAlpha = opacity;
-            ctx.fill();
 
-            // Clip to the circle
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.clip();
-
-            // Draw the texture inside the circle
-            ctx.globalAlpha = opacity; // Match texture opacity with circle opacity
-            const pattern = ctx.createPattern(texture, 'repeat');
-            ctx.fillStyle = pattern;
-            ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
-
-            // Restore context state
-            ctx.restore();
+            if (isSolid) {
+                ctx.fillStyle = color;
+                ctx.fill();
+            } else {
+                ctx.lineWidth = STROKE_WIDTH;
+                ctx.strokeStyle = color;
+                ctx.stroke();
+            }
         }
 
         function generateArtwork() {
             clearCanvas();
 
-            const circles = []; // Store existing circles to avoid overlaps
+            const cellWidth = canvas.width / COLUMNS;
+            const cellHeight = canvas.height / ROWS;
+            const radius = Math.min(cellWidth, cellHeight) / 2.5; // Circle size fits well in the grid
 
-            if (texture.complete) {
-                for (let i = 0; i < 25; i++) { // 25 circles
-                    let validCircle = false;
-                    let x, y, radius;
+            for (let row = 0; row < ROWS; row++) {
+                for (let col = 0; col < COLUMNS; col++) {
+                    const x = col * cellWidth + cellWidth / 2;
+                    const y = row * cellHeight + cellHeight / 2;
 
-                    while (!validCircle) {
-                        // Randomly determine circle properties
-                        const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
-                        const colorIndex = Math.floor(Math.random() * 3); // Updated colors
-                        const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
+                    const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+                    const isSolid = Math.random() < 0.5; // 50% chance for solid or stroke
 
-                        radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
-                        const color = COLORS[colorIndex];
-                        const opacity = OPACITIES[opacityIndex];
-
-                        // Random position, ensuring the circle stays within the canvas
-                        x = Math.random() * (canvas.width - 2 * radius) + radius;
-                        y = Math.random() * (canvas.height - 2 * radius) + radius;
-
-                        // Check for overlap with existing circles
-                        validCircle = circles.every(([cx, cy, cr]) => !circlesOverlap(x, y, radius, cx, cy, cr));
-
-                        // If valid, store the circle and draw it
-                        if (validCircle) {
-                            circles.push([x, y, radius]);
-                            drawTexturedCircle(x, y, radius, color, opacity);
-                        }
-                    }
+                    drawCircle(x, y, radius, color, isSolid);
                 }
-            } else {
-                texture.onload = generateArtwork; // Retry once texture is loaded
             }
         }
 
@@ -175,7 +135,7 @@
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {
             const link = document.createElement("a");
-            link.download = "textured-circle-artwork.png";
+            link.download = "uniform-grid-artwork.png";
             link.href = canvas.toDataURL("image/png", 1.0);
             link.click();
         });

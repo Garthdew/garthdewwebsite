@@ -111,6 +111,38 @@
             ctx.stroke();
         }
 
+        function drawHexagon(x, y, size) {
+            const angle = Math.PI / 3;
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const px = x + size * Math.cos(i * angle);
+                const py = y + size * Math.sin(i * angle);
+                if (i === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        function drawPentagon(x, y, size) {
+            const angle = Math.PI * 2 / 5;
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+                const px = x + size * Math.cos(i * angle - Math.PI / 2);
+                const py = y + size * Math.sin(i * angle - Math.PI / 2);
+                if (i === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            ctx.closePath();
+            ctx.stroke();
+        }
+
         function drawShapeRecursive(x, y, size, shape) {
             if (size < MIN_SHAPE_SIZE) return;
 
@@ -127,6 +159,12 @@
                 case "triangle":
                     drawTriangle(x, y, size);
                     break;
+                case "hexagon":
+                    drawHexagon(x, y, size / 2);
+                    break;
+                case "pentagon":
+                    drawPentagon(x, y, size / 2);
+                    break;
             }
 
             // Shrink shape and recursively draw again
@@ -139,10 +177,11 @@
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
 
-            const shapes = ["circle", "square", "triangle"];
+            const shapes = ["circle", "square", "triangle", "hexagon", "pentagon"];
             const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
 
-            drawShapeRecursive(centerX, centerY, canvas.width * 0.4, randomShape);
+            // Start with a shape that fills most of the page
+            drawShapeRecursive(centerX, centerY, canvas.width * 0.8, randomShape);
         }
 
         const refreshButton = document.getElementById("refreshButton");

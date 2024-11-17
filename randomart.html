@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Oil Paint Artwork</title>
+    <title>Generative Circle Art with Texture</title>
     <style>
         body {
             display: flex;
@@ -66,99 +66,102 @@
         <canvas id="artCanvas"></canvas>
     </div>
     <div class="buttons">
-        <button id="refreshButton">Refresh Artwork</button>
+        <button id="refreshButton">Generate Artwork</button>
         <button id="exportButton">Export High-Res</button>
     </div>
 
     <script>
         const DPI = 300;
-        const A4_WIDTH_INCHES = 8.27;
-        const A4_HEIGHT_INCHES = 11.69;
+        const A3_WIDTH_INCHES = 11.69;
+        const A3_HEIGHT_INCHES = 16.54;
 
         const canvas = document.getElementById("artCanvas");
         const ctx = canvas.getContext("2d");
 
-        canvas.width = DPI * A4_WIDTH_INCHES;
-        canvas.height = DPI * A4_HEIGHT_INCHES;
+        canvas.width = DPI * A3_WIDTH_INCHES;
+        canvas.height = DPI * A3_HEIGHT_INCHES;
 
-        const COLORS = ["#39ff14", "#00ffff", "#ff007f", "#ff4500"]; // Neon green, blue, pink, orange
-        const AREAS = [
-            { x: 0, y: 0, width: canvas.width / 2, height: canvas.height / 2 },
-            { x: canvas.width / 2, y: 0, width: canvas.width / 2, height: canvas.height / 2 },
-            { x: 0, y: canvas.height / 2, width: canvas.width / 2, height: canvas.height / 2 },
-            { x: canvas.width / 2, y: canvas.height / 2, width: canvas.width / 2, height: canvas.height / 2 }
-        ];
+        const COLORS = ["#F75C03", "#8FF7A7", "#51BBFE"]; // Updated colors
+        const OPACITIES = [0.25, 0.5, 0.75];
+        const SIZES_INCHES = [1, 2, 3];
+        const BACKGROUND_COLOR = "#FFFFFF";
 
-        function randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        function randomFloat(min, max) {
-            return Math.random() * (max - min) + min;
-        }
+        // Texture image
+        const texture = new Image();
+        texture.src = 'https://www.transparenttextures.com/patterns/asfalt-light.png'; // Replace with your texture URL
 
         function clearCanvas() {
-            ctx.fillStyle = "#FFFFFF";
+            ctx.fillStyle = BACKGROUND_COLOR;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        function drawBlobCircle(x, y, size, color, opacity) {
-            ctx.globalAlpha = opacity; // Set random opacity
-            ctx.fillStyle = color;
+        function drawTexturedCircle(x, y, radius, color, opacity) {
+            // Draw the circle
             ctx.beginPath();
-            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.globalAlpha = opacity;
             ctx.fill();
-            ctx.globalAlpha = 1.0; // Reset opacity
-        }
 
-        function fillUnusedAreas(selectedAreaIndex) {
-            ctx.fillStyle = "#f9f9f9"; // Light grey
-            AREAS.forEach((area, index) => {
-                if (index !== selectedAreaIndex) {
-                    ctx.beginPath(); // Avoid unintended strokes
-                    ctx.fillRect(area.x, area.y, area.width, area.height);
-                }
-            });
+            // Clip to the circle
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.clip();
+
+            // Draw the texture inside the circle
+            ctx.globalAlpha = opacity; // Match texture opacity with circle opacity
+            const pattern = ctx.createPattern(texture, 'repeat');
+            ctx.fillStyle = pattern;
+            ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+
+            // Restore context state
+            ctx.restore();
         }
 
         function generateArtwork() {
             clearCanvas();
 
-            // Generate random numbers
-            const areaIndex = randomInt(0, 3); // Area (1-4)
-            const numberOfMarks = [50, 100, 150, 200][randomInt(0, 3)]; // 50, 100, 150, 200
-            const color = COLORS[randomInt(0, 3)]; // Neon green, blue, pink, orange
+            // Ensure the texture is loaded before generating artwork
+            if (texture.complete) {
+                for (let i = 0; i < 25; i++) { // Reduced to 25 circles
+                    // Randomly determine circle properties
+                    const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
+                    const colorIndex = Math.floor(Math.random() * 3); // Updated colors
+                    const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
 
-            fillUnusedAreas(areaIndex); // Grey out unused areas
+                    const radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
+                    const color = COLORS[colorIndex];
+                    const opacity = OPACITIES[opacityIndex];
 
-            const selectedArea = AREAS[areaIndex];
+                    // Random position, ensuring the circle stays within the canvas
+                    const x = Math.random() * (canvas.width - 2 * radius) + radius;
+                    const y = Math.random() * (canvas.height - 2 * radius) + radius;
 
-            for (let i = 0; i < numberOfMarks; i++) {
-                const size = randomInt(20, 50); // Large circle size
-                const x = randomInt(
-                    selectedArea.x + size,
-                    selectedArea.x + selectedArea.width - size
-                );
-                const y = randomInt(
-                    selectedArea.y + size,
-                    selectedArea.y + selectedArea.height - size
-                );
-                const opacity = randomFloat(0.25, 1); // Random opacity (25%-100%)
-                drawBlobCircle(x, y, size, color, opacity);
+                    // Draw the textured circle
+                    drawTexturedCircle(x, y, radius, color, opacity);
+                }
+            } else {
+                texture.onload = generateArtwork; // Retry once texture is loaded
             }
         }
 
         const refreshButton = document.getElementById("refreshButton");
-        refreshButton.addEventListener("click", generateArtwork);
+        refreshButton.addEventListener("click", () => {
+            generateArtwork();
+        });
 
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {
             const link = document.createElement("a");
-            link.download = "neon-artwork.png";
+            link.download = "textured-circle-artwork.png";
             link.href = canvas.toDataURL("image/png", 1.0);
             link.click();
         });
 
+        // Generate artwork on page load
         generateArtwork();
     </script>
 </body>

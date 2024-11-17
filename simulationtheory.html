@@ -81,7 +81,7 @@
         canvas.width = DPI * A3_WIDTH_INCHES;
         canvas.height = DPI * A3_HEIGHT_INCHES;
 
-        const COLORS = ["blue", "red", "yellow"];
+        const COLORS = ["#BD9391", "#91B7C7", "#6CBEED"]; // Updated colors
         const OPACITIES = [0.25, 0.5, 0.75];
         const SIZES_INCHES = [1, 2, 3];
         const BACKGROUND_COLOR = "#FFFFFF";
@@ -122,14 +122,14 @@
         }
 
         function generateArtwork() {
-            // Ensure the texture is loaded before generating artwork
-            texture.onload = () => {
-                clearCanvas();
+            clearCanvas();
 
+            // Ensure the texture is loaded before generating artwork
+            if (texture.complete) {
                 for (let i = 0; i < 100; i++) {
                     // Randomly determine circle properties
                     const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
-                    const colorIndex = Math.floor(Math.random() * 3); // Blue, Red, Yellow
+                    const colorIndex = Math.floor(Math.random() * 3); // Updated colors
                     const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
 
                     const radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
@@ -143,11 +143,15 @@
                     // Draw the textured circle
                     drawTexturedCircle(x, y, radius, color, opacity);
                 }
-            };
+            } else {
+                texture.onload = generateArtwork; // Retry once texture is loaded
+            }
         }
 
         const refreshButton = document.getElementById("refreshButton");
-        refreshButton.addEventListener("click", generateArtwork);
+        refreshButton.addEventListener("click", () => {
+            generateArtwork();
+        });
 
         const exportButton = document.getElementById("exportButton");
         exportButton.addEventListener("click", () => {

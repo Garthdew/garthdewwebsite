@@ -112,9 +112,10 @@
         }
 
         function fillUnusedAreas(selectedAreaIndex) {
-            ctx.fillStyle = "#d3d3d3"; // Light grey
+            ctx.fillStyle = "#f9f9f9"; // Light grey
             AREAS.forEach((area, index) => {
                 if (index !== selectedAreaIndex) {
+                    ctx.beginPath(); // Avoid unintended strokes
                     ctx.fillRect(area.x, area.y, area.width, area.height);
                 }
             });

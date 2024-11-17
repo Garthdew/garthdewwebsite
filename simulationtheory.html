@@ -95,6 +95,13 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
+        function circlesOverlap(x1, y1, r1, x2, y2, r2) {
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            return distance < r1 + r2;
+        }
+
         function drawTexturedCircle(x, y, radius, color, opacity) {
             // Draw the circle
             ctx.beginPath();
@@ -124,24 +131,36 @@
         function generateArtwork() {
             clearCanvas();
 
-            // Ensure the texture is loaded before generating artwork
+            const circles = []; // Store existing circles to avoid overlaps
+
             if (texture.complete) {
-                for (let i = 0; i < 25; i++) { // Reduced to 25 circles
-                    // Randomly determine circle properties
-                    const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
-                    const colorIndex = Math.floor(Math.random() * 3); // Updated colors
-                    const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
+                for (let i = 0; i < 25; i++) { // 25 circles
+                    let validCircle = false;
+                    let x, y, radius;
 
-                    const radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
-                    const color = COLORS[colorIndex];
-                    const opacity = OPACITIES[opacityIndex];
+                    while (!validCircle) {
+                        // Randomly determine circle properties
+                        const sizeIndex = Math.floor(Math.random() * 3); // 1 inch, 2 inches, 3 inches
+                        const colorIndex = Math.floor(Math.random() * 3); // Updated colors
+                        const opacityIndex = Math.floor(Math.random() * 3); // 25%, 50%, 75%
 
-                    // Random position, ensuring the circle stays within the canvas
-                    const x = Math.random() * (canvas.width - 2 * radius) + radius;
-                    const y = Math.random() * (canvas.height - 2 * radius) + radius;
+                        radius = (SIZES_INCHES[sizeIndex] * DPI) / 2; // Convert inches to pixels
+                        const color = COLORS[colorIndex];
+                        const opacity = OPACITIES[opacityIndex];
 
-                    // Draw the textured circle
-                    drawTexturedCircle(x, y, radius, color, opacity);
+                        // Random position, ensuring the circle stays within the canvas
+                        x = Math.random() * (canvas.width - 2 * radius) + radius;
+                        y = Math.random() * (canvas.height - 2 * radius) + radius;
+
+                        // Check for overlap with existing circles
+                        validCircle = circles.every(([cx, cy, cr]) => !circlesOverlap(x, y, radius, cx, cy, cr));
+
+                        // If valid, store the circle and draw it
+                        if (validCircle) {
+                            circles.push([x, y, radius]);
+                            drawTexturedCircle(x, y, radius, color, opacity);
+                        }
+                    }
                 }
             } else {
                 texture.onload = generateArtwork; // Retry once texture is loaded

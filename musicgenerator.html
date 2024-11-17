@@ -8,7 +8,8 @@
         body, html {
             margin: 0;
             padding: 0;
-            min-height: 100vh; /* Ensures the content fills the viewport */
+            height: 100%;
+            overflow: hidden;
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
             justify-content: center;
@@ -40,30 +41,21 @@
             margin-bottom: 20px;
         }
 
-        input, button {
+        button {
             margin: 10px;
-            padding: 10px;
-            font-size: 16px;
+            padding: 20px;
+            font-size: 18px;
             border: none;
-            border-radius: 5px;
+            border-radius: 50%;
             cursor: pointer;
-        }
-
-        #playButton {
             background-color: rgba(255, 255, 255, 0.8);
             color: black;
-            font-size: 18px;
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
-        #playButton:hover {
+        button:hover {
             transform: scale(1.1);
             background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        #countdown {
-            font-size: 24px;
-            margin-top: 20px;
         }
 
         #troubleshooting {
@@ -72,7 +64,6 @@
             font-size: 14px;
             cursor: pointer;
             text-decoration: underline;
-            text-align: center;
         }
 
         #instructions {
@@ -80,7 +71,6 @@
             color: white;
             font-size: 14px;
             display: none;
-            text-align: center;
         }
     </style>
 </head>
@@ -88,11 +78,8 @@
 
     <div class="music-generator">
         <h1>Ambient Music Generator</h1>
-        <p>Set the timer and click "Generate" to create a soundscape.</p>
-        <label for="duration">Duration (minutes):</label>
-        <input type="number" id="duration" min="1" max="60" value="5">
+        <p>Click "Generate" to begin a unique, never-ending soundscape.</p>
         <button id="playButton">Generate</button>
-        <div id="countdown"></div>
         <div id="troubleshooting">Troubleshooting</div>
         <div id="instructions">
             <p><strong>If you're using Safari:</strong></p>
@@ -129,8 +116,6 @@
             ];
 
             let playing = false;
-            let timer = null;
-            let countdownInterval = null;
 
             function playRandomChord() {
                 if (!playing) return;
@@ -145,53 +130,26 @@
                 setTimeout(playRandomChord, randomInterval);
             }
 
-            function startCountdown(duration) {
-                const countdown = document.getElementById('countdown');
-                let remainingTime = duration * 60;
-
-                countdownInterval = setInterval(() => {
-                    if (remainingTime <= 0) {
-                        clearInterval(countdownInterval);
-                        countdown.textContent = 'Time’s up!';
-                    } else {
-                        const minutes = Math.floor(remainingTime / 60);
-                        const seconds = remainingTime % 60;
-                        countdown.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                        remainingTime--;
-                    }
-                }, 1000);
-            }
-
-            function startMusic(duration) {
+            function startMusic() {
                 playing = true;
                 playRandomChord();
-                startCountdown(duration);
-
-                timer = setTimeout(() => {
-                    stopMusic();
-                }, duration * 60 * 1000);
             }
 
             function stopMusic() {
                 playing = false;
-                clearTimeout(timer);
-                clearInterval(countdownInterval);
-                document.getElementById('countdown').textContent = '';
             }
 
             document.getElementById('playButton').addEventListener('click', function() {
-                const duration = parseInt(document.getElementById('duration').value, 10);
-
                 if (playing) {
                     stopMusic();
                     this.textContent = 'Generate';
                 } else {
                     if (audioContext.state === 'suspended') {
                         audioContext.resume().then(() => {
-                            startMusic(duration);
+                            startMusic();
                         });
                     } else {
-                        startMusic(duration);
+                        startMusic();
                     }
                     this.textContent = 'Stop';
                 }

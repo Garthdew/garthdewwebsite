@@ -9,11 +9,10 @@ body {
     padding: 0;
     font-size: 16px;
     font-weight: normal;
+    align-items: flex-start; /* Ensure alignment starts at the top-left */
 }
 
 /* Heading styles */
-
-
 h1, h2, h3, h4, h5, h6 {
     font-size: 16px;
     margin-bottom: 8px;
@@ -30,20 +29,19 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateX(0);
     transition: transform 0.3s ease;
     z-index: 999;
+    text-align: left; /* Ensure left alignment of text in the sidebar */
 }
 
 .sidebar h1 {
     font-size: 18px;
     font-weight: normal;
     margin-bottom: 15px;
-    
 }
 
 .sidebar h2, .sidebar p {
     font-size: 16px;
     font-weight: normal;
     margin-bottom: 10px;
-    
 }
 
 .sidebar a {
@@ -74,16 +72,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Main content styling */
 .content {
-    margin-left: 270px;
+    margin-left: 270px; /* Space for sidebar on desktop */
     padding: 20px;
     width: calc(100% - 270px);
     background: #fff;
+    text-align: left; /* Ensure all elements are left-aligned */
 }
 
 /* Text content styling */
 .text-content {
     padding: 20px 0;
-    width: 100%; /* Ensures full width on mobile */
+    width: 100%; /* Occupy full width within the container */
+    max-width: 800px; /* Restrict the width of the content */
+    margin: 0; /* No auto-centering */
+    text-align: left; /* Explicitly left-align all text */
 }
 
 /* Full-width image gallery */
@@ -93,13 +95,14 @@ h1, h2, h3, h4, h5, h6 {
     flex-wrap: wrap;
     gap: 10px;
     padding: 20px 0;
+    justify-content: flex-start; /* Align gallery items to the left */
 }
 
 /* Carousel styling */
 .carousel {
     display: flex;
-    align-items: left;
-    justify-content: flex-start;
+    align-items: flex-start; /* Align carousel items to the top-left */
+    justify-content: flex-start; /* Left-align carousel */
     max-width: 600px;
     margin: 20px 0;
     position: relative;
@@ -168,20 +171,12 @@ h1, h2, h3, h4, h5, h6 {
 
     .text-content {
         width: 100%;
+        max-width: 100%; /* Allow full width on mobile */
     }
 
     .gallery-container img {
-        width: calc(50% - 10px);
+        width: calc(50% - 10px); /* Two columns on smaller screens */
     }
 
     .carousel {
-        justify-content: center;
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .gallery-container img {
-        width: 100%;
-    }
-}
+        justify-content: center; /* Center carousel on mobile for better appear

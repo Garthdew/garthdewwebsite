@@ -7,14 +7,14 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: normal;
     align-items: flex-start; /* Ensure alignment starts at the top-left */
 }
 
 /* Heading styles */
 h1, h2, h3, h4, h5, h6 {
-    font-size: 16px;
+    font-size: 20px;
     margin-bottom: 8px;
 }
 

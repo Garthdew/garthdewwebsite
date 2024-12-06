@@ -1,9 +1,12 @@
+/* Import IBM Plex Mono font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+
 /* General body and font styles */
 body {
     display: flex;
-    font-family: 'Helvetica', Arial, sans-serif;
+    font-family: 'IBM Plex Mono', monospace; /* Use IBM Plex Mono */
     min-height: 100vh;
-    background: #fff;
+    background: #FCF5E5; /* Set background color */
     color: #333;
     margin: 0;
     padding: 0;
@@ -16,7 +19,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-size: 20px;
     margin-bottom: 8px;
-    font-weight: bold;
+    font-weight: bold; /* Headings in bold */
 }
 
 /* Sidebar styling */
@@ -35,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidebar h1 {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: bold; /* Bold heading */
     margin-bottom: 15px;
 }
 
@@ -76,7 +79,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 270px; /* Space for sidebar on desktop */
     padding: 20px;
     width: calc(100% - 270px);
-    background: #fff;
+    background: #FCF5E5; /* Match the body background */
     text-align: left; /* Ensure all elements are left-aligned */
 }
 
@@ -180,4 +183,13 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .carousel {
-        justify-content: center; /* Center carousel on mobile for better appear
+        justify-content: center; /* Center carousel on mobile for better appearance */
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-container img {
+        width: 100%; /* Single column on extra small screens */
+    }
+}

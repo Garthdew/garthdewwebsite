@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - Music Embed</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <button class="menu-button" onclick="toggleSidebar()">☰</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("sidebar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.body.insertAdjacentHTML("afterbegin", data);
+                });
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+      
+    <div class="content">
+        <div class="text-content">
+            <h1>Water My Friend</h1>
+            <div class="music-embed">
+            <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=1805015043/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless><a href="https://garthdew.bandcamp.com/album/the-mellow-pond">The Mellow Pond by Garth Dew</a></iframe>
+            <<p>The Mellow Pond is the second installment in my Music for Meditation series, a 30-minute ambient exploration of gentle synth tones and tranquil soundscapes designed to calm and center the mind.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

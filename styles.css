@@ -18,17 +18,17 @@ header {
 header h1 {
     font-size: 36px;
     font-weight: bold;
-    margin-bottom: 20px; /* Increased gap between name and menu */
+    margin-bottom: 20px;
 }
 
 header h1 a {
     text-decoration: none;
-    color: #333; /* Default black */
-    transition: color 0.3s; /* Smooth hover effect */
+    color: #333;
+    transition: color 0.3s;
 }
 
 header h1 a:hover {
-    color: blue; /* Turn blue on hover */
+    color: blue;
 }
 
 /* Navigation Menu */
@@ -41,25 +41,21 @@ nav ul.menu {
     gap: 20px;
 }
 
-nav ul.menu li {
-    display: inline;
-}
-
 nav ul.menu li a {
     text-decoration: none;
-    color: #333; /* Default black */
+    color: #333;
     font-size: 16px;
     padding: 10px 15px;
-    transition: color 0.3s; /* Smooth hover effect */
+    transition: color 0.3s;
 }
 
 nav ul.menu li a:hover {
-    color: blue; /* Standard blue hover color */
+    color: blue;
 }
 
 /* Hamburger Menu Button */
 .menu-button {
-    display: none; /* Hidden on desktop */
+    display: none;
     font-size: 24px;
     color: #333;
     background: none;
@@ -74,105 +70,70 @@ nav ul.menu li a:hover {
 /* Mobile Menu Styles */
 @media (max-width: 768px) {
     .menu-button {
-        display: block; /* Show hamburger button on mobile */
+        display: block;
     }
 
     nav ul.menu {
-        display: none; /* Hide menu initially */
-        flex-direction: column; /* Stack menu items vertically */
-        position: fixed; /* Make the menu fill the screen */
+        display: none;
+        flex-direction: column;
+        position: fixed;
         top: 60px;
         left: 0;
         width: 100%;
-        height: calc(100% - 60px); /* Leave space for header */
+        height: calc(100% - 60px);
         background: #fff;
-        justify-content: center; /* Center items vertically */
-        align-items: center; /* Center items horizontally */
-        z-index: 999; /* Ensure the menu is above other elements */
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
     }
 
     nav ul.menu.active {
-        display: flex; /* Show menu when active */
-    }
-
-    nav ul.menu li {
-        margin: 15px 0; /* Add spacing between menu items */
-    }
-
-    nav ul.menu li a {
-        font-size: 24px; /* Larger font size for mobile */
+        display: flex;
     }
 
     header h1 {
-        position: fixed; /* Keep the name fixed at the top */
+        position: fixed;
         top: 10px;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 1001; /* Ensure the name is above the menu */
+        z-index: 1001;
     }
 }
 
-/* Main Content */
-main {
+/* Film Section */
+.film-section {
     padding: 40px 20px;
-    text-align: left;
+    text-align: center;
 }
 
-section {
-    margin-bottom: 40px;
+.film-section h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-/* Two-column layout */
-.two-columns {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-.text-column {
-    flex: 1;
-    max-width: 50%;
+.film-section p {
+    font-size: 16px;
+    margin-bottom: 30px;
     line-height: 1.6;
 }
 
-.image-column {
-    flex: 1;
-    max-width: 50%;
+/* Video Container */
+.video-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.image-column img {
+.video-container iframe {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
+    height: calc(9 / 16 * 100%); /* Maintain 16:9 aspect ratio */
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .two-columns {
-        flex-direction: column; /* Stack columns vertically */
+    .film-section p {
+        font-size: 14px;
+        margin-bottom: 20px;
     }
-
-    .text-column {
-        order: 0; /* Ensure the text column appears first */
-        max-width: 100%; /* Full width on smaller screens */
-    }
-
-    .image-column {
-        order: 1; /* Ensure the image column appears second */
-        max-width: 100%; /* Full width on smaller screens */
-    }
-}
-
-/* Header Font Styling */
-h1 {
-    font-size: 36px;
-    font-weight: bold;
-}
-
-h2 {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 15px;
 }

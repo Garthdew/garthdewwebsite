@@ -11,8 +11,8 @@ body {
 /* Header Styling */
 header {
     padding: 20px 0;
-    background: #fff;
-    border-bottom: 1px solid #ddd;
+    background: #fff; /* White background */
+    border: none; /* Remove any line under the header */
     position: relative;
 }
 
@@ -22,6 +22,7 @@ header h1 {
     margin-bottom: 10px;
 }
 
+/* Navigation Menu */
 nav ul.menu {
     list-style: none;
     padding: 0;
@@ -40,7 +41,6 @@ nav ul.menu li a {
     color: #333;
     font-size: 16px;
     padding: 10px 15px;
-    border-radius: 4px;
     transition: background-color 0.3s;
 }
 
@@ -50,7 +50,7 @@ nav ul.menu li a:hover {
 
 /* Hamburger Menu Button */
 .menu-button {
-    display: none; /* Hidden by default */
+    display: none; /* Hidden on desktop */
     font-size: 24px;
     color: #333;
     background: none;
@@ -62,21 +62,20 @@ nav ul.menu li a:hover {
     z-index: 1000;
 }
 
-/* Hide menu on mobile */
+/* Mobile Menu Styles */
 @media (max-width: 768px) {
     .menu-button {
-        display: block; /* Show hamburger button */
+        display: block; /* Show hamburger button on mobile */
     }
 
     nav ul.menu {
         display: none; /* Hide menu initially */
         flex-direction: column; /* Stack menu items vertically */
-        background: #fff;
+        background: #fff; /* White background for dropdown */
         position: absolute;
         top: 60px;
         right: 0;
         width: 100%;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     nav ul.menu.active {
@@ -117,7 +116,6 @@ section {
 .image-column {
     flex: 1;
     max-width: 50%;
-    text-align: right;
 }
 
 .image-column img {

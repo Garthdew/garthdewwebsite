@@ -11,7 +11,7 @@ body {
 /* Header Styling */
 header {
     padding: 20px 0;
-    background: #f4f4f4;
+    background: #fff; /* Set header background to white */
     border-bottom: 1px solid #ddd;
 }
 
@@ -62,7 +62,7 @@ section {
     display: flex;
     flex-wrap: wrap; /* Adjust for smaller screens */
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* Align content at the top of the section */
     gap: 20px;
 }
 
@@ -75,12 +75,14 @@ section {
 .image-column {
     flex: 1;
     max-width: 50%; /* Image occupies 50% of the width */
+    text-align: right;
 }
 
 .image-column img {
     width: 100%;
     height: auto;
     border-radius: 8px; /* Add some styling to the image */
+    vertical-align: top; /* Align image to the top */
 }
 
 /* Responsive Adjustments */

@@ -11,15 +11,14 @@ body {
 /* Header Styling */
 header {
     padding: 20px 0;
-    background: #fff; /* White background */
-    position: relative; /* Ensure header stays at the top */
-    border: none; /* No line under the header */
+    background: #fff;
+    position: relative;
 }
 
-header h1, h2, h3 {
+header h1 {
     font-size: 36px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* Slightly increased gap between name and menu */
 }
 
 /* Navigation Menu */
@@ -41,11 +40,11 @@ nav ul.menu li a {
     color: #333;
     font-size: 16px;
     padding: 10px 15px;
-    transition: background-color 0.3s;
+    transition: color 0.3s;
 }
 
 nav ul.menu li a:hover {
-    background-color: #ddd;
+    color: blue; /* Standard blue hover color */
 }
 
 /* Hamburger Menu Button */
@@ -93,6 +92,13 @@ nav ul.menu li a:hover {
     nav ul.menu li a {
         font-size: 24px; /* Larger font size for mobile */
     }
+
+    header h1 {
+        position: absolute; /* Keep the name fixed at the top */
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 /* Main Content */
@@ -129,6 +135,42 @@ section {
     width: 100%;
     height: auto;
     border-radius: 8px;
+}
+
+/* Header Font Styling */
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+h5 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+h6 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 /* Responsive Adjustments */

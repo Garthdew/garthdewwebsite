@@ -23,11 +23,12 @@ header h1 {
 
 header h1 a {
     text-decoration: none;
-    color: #333;
+    color: #333; /* Default black */
+    transition: color 0.3s; /* Smooth hover effect */
 }
 
 header h1 a:hover {
-    color: blue; /* Standard blue hover for the link */
+    color: blue; /* Turn blue on hover */
 }
 
 /* Navigation Menu */
@@ -46,10 +47,10 @@ nav ul.menu li {
 
 nav ul.menu li a {
     text-decoration: none;
-    color: #333;
+    color: #333; /* Default black */
     font-size: 16px;
     padding: 10px 15px;
-    transition: color 0.3s;
+    transition: color 0.3s; /* Smooth hover effect */
 }
 
 nav ul.menu li a:hover {
@@ -157,39 +158,4 @@ h2 {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 15px;
-}
-
-h3 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-h4 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-h5 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-h6 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .two-columns {
-        flex-direction: column;
-    }
-
-    .text-column, .image-column {
-        max-width: 100%;
-    }
 }

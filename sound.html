@@ -9,17 +9,15 @@
         /* Specific styles for the Sound page */
         .sound-section {
             padding: 40px 20px;
+            text-align: center;
         }
 
         .two-columns {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .sound-column {
-            flex: 1;
-            max-width: 50%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns */
+            gap: 20px; /* Space between images */
+            justify-content: center;
+            align-items: center;
         }
 
         .sound-column img {
@@ -43,10 +41,10 @@
         <button class="menu-button" onclick="toggleMenu()">☰</button>
         <nav>
             <ul class="menu">
-                <li><a href="index.html">About</a></li>
-                <li><a href="sound.html">Sound</a></li>
-                <li><a href="photo.html">Photo</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="music.html">Music</a></li>
                 <li><a href="film.html">Film</a></li>
+                <li><a href="photo.html">Photo</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>

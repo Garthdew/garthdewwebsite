@@ -148,6 +148,23 @@ section {
     border-radius: 8px;
 }
 
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .two-columns {
+        flex-direction: column; /* Stack columns vertically */
+    }
+
+    .text-column {
+        order: 0; /* Ensure the text column appears first */
+        max-width: 100%; /* Full width on smaller screens */
+    }
+
+    .image-column {
+        order: 1; /* Ensure the image column appears second */
+        max-width: 100%; /* Full width on smaller screens */
+    }
+}
+
 /* Header Font Styling */
 h1 {
     font-size: 36px;

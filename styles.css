@@ -12,11 +12,11 @@ body {
 header {
     padding: 20px 0;
     background: #fff; /* White background */
-    border: none; /* Remove any line under the header */
-    position: relative;
+    position: relative; /* Ensure header stays at the top */
+    border: none; /* No line under the header */
 }
 
-header h1 {
+header h1, h2, h3 {
     font-size: 36px;
     font-weight: bold;
     margin-bottom: 10px;
@@ -71,11 +71,15 @@ nav ul.menu li a:hover {
     nav ul.menu {
         display: none; /* Hide menu initially */
         flex-direction: column; /* Stack menu items vertically */
-        background: #fff; /* White background for dropdown */
-        position: absolute;
-        top: 60px;
-        right: 0;
+        position: fixed; /* Make the menu fill the screen */
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
+        background: #fff;
+        justify-content: center; /* Center items vertically */
+        align-items: center; /* Center items horizontally */
+        z-index: 999; /* Ensure the menu is above other elements */
     }
 
     nav ul.menu.active {
@@ -83,8 +87,11 @@ nav ul.menu li a:hover {
     }
 
     nav ul.menu li {
-        text-align: center;
-        margin: 10px 0;
+        margin: 15px 0; /* Add spacing between menu items */
+    }
+
+    nav ul.menu li a {
+        font-size: 24px; /* Larger font size for mobile */
     }
 }
 

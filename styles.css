@@ -11,8 +11,9 @@ body {
 /* Header Styling */
 header {
     padding: 20px 0;
-    background: #fff; /* Set header background to white */
+    background: #fff;
     border-bottom: 1px solid #ddd;
+    position: relative;
 }
 
 header h1 {
@@ -47,10 +48,51 @@ nav ul.menu li a:hover {
     background-color: #ddd;
 }
 
+/* Hamburger Menu Button */
+.menu-button {
+    display: none; /* Hidden by default */
+    font-size: 24px;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Hide menu on mobile */
+@media (max-width: 768px) {
+    .menu-button {
+        display: block; /* Show hamburger button */
+    }
+
+    nav ul.menu {
+        display: none; /* Hide menu initially */
+        flex-direction: column; /* Stack menu items vertically */
+        background: #fff;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul.menu.active {
+        display: flex; /* Show menu when active */
+    }
+
+    nav ul.menu li {
+        text-align: center;
+        margin: 10px 0;
+    }
+}
+
 /* Main Content */
 main {
     padding: 40px 20px;
-    text-align: left; /* Align text to the left for readability */
+    text-align: left;
 }
 
 section {
@@ -60,38 +102,37 @@ section {
 /* Two-column layout */
 .two-columns {
     display: flex;
-    flex-wrap: wrap; /* Adjust for smaller screens */
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: flex-start; /* Align content at the top of the section */
+    align-items: flex-start;
     gap: 20px;
 }
 
 .text-column {
     flex: 1;
-    max-width: 50%; /* Text occupies 50% of the width */
+    max-width: 50%;
     line-height: 1.6;
 }
 
 .image-column {
     flex: 1;
-    max-width: 50%; /* Image occupies 50% of the width */
+    max-width: 50%;
     text-align: right;
 }
 
 .image-column img {
     width: 100%;
     height: auto;
-    border-radius: 8px; /* Add some styling to the image */
-    vertical-align: top; /* Align image to the top */
+    border-radius: 8px;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .two-columns {
-        flex-direction: column; /* Stack columns on top of each other */
+        flex-direction: column;
     }
 
     .text-column, .image-column {
-        max-width: 100%; /* Full width on smaller screens */
+        max-width: 100%;
     }
 }

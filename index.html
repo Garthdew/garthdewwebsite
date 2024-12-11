@@ -3,76 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garth Dew's Website</title>
+    <title>About - Garth Dew</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <button class="menu-button" onclick="toggleSidebar()">☰</button>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch("sidebar.html")
-                .then(response => response.text())
-                .then(data => {
-                    document.body.insertAdjacentHTML("afterbegin", data);
-                });
-        });
-
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('active');
-        }
-    </script>
-
-    <div class="content">
-        <div class="text-content">
-            <h1>Welcome</h1>
-            <p>I am an artist and filmmaker from Northern England.</p>
-            <h2>Manifesto</h2>
-            <ul>
-            <li>Possibility &gt; Limitation</li>
-            <li>Ideas &gt; Form</li>
-            <li>Randomness &gt; Certainty</li>
-            <li>Restraints &gt; Unrestricted</li>
-            <li>Systems &gt; Chaos</li>
-            <li>Minimalism &gt; Excess</li>
-            <li>Play &gt; Work</li>
-            <li>Stories &gt; Information</li>
-            <li>Finishing &gt; Tinkering</li>
+    <!-- Header -->
+    <header>
+        <h1>Garth Dew</h1>
+        <nav>
+            <ul class="menu">
+                <li><a href="#about">About</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#film">Film</a></li>
+                <li><a href="#photo">Photo</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <h2>Output</h2>
-            <table style="border-collapse: collapse; width: 100.52356%; height: 90px;" border="1">
-<tbody>
-<tr style="height: 18px;">
-<td style="width: 33.333333%; height: 18px;"><strong>Title</strong></td>
-<td style="width: 33.333333%; height: 18px;"><strong>Type</strong></td>
-<td style="width: 33.333333%; height: 18px;"><strong>Year</strong></td>
-</tr>
-<tr style="height: 18px;">
-<td style="width: 33.333333%; height: 18px;">Untethered</td>
-<td style="width: 33.333333%; height: 18px;">Music</td>
-<td style="width: 33.333333%; height: 18px;">2024</td>
-</tr>
-<tr style="height: 18px;">
-<td style="width: 33.333333%; height: 18px;">Mindlessness</td>
-<td style="width: 33.333333%; height: 18px;">Music</td>
-<td style="width: 33.333333%; height: 18px;">2024</td>
-</tr>
-<tr style="height: 18px;">
-<td style="width: 33.333333%; height: 18px;">Mellow Pond</td>
-<td style="width: 33.333333%; height: 18px;">Music</td>
-<td style="width: 33.333333%; height: 18px;">2024</td>
-</tr>
-</tbody>
-</table>
-            <h2>Contact</h2>
-            <p><a href="mailto:garth@gdvideo.co.uk">garth@gdvideo.co.uk</a></p>
-            <source src="/images/garthdew.jpg" /></video></p>
-            <div class="image-embed">
-                <img src="images/garthdew.jpg" alt="garth dew" style="width:100%; max-width:600px; border-radius: 4px;">
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section id="about" class="two-columns">
+            <div class="text-column">
+                <p>
+                    Garth Dew is a UK-based artist working across sound, film, and photography to capture moods, moments, and stories that interest him. His personal film and photography projects, rooted in documentary, have been featured on the BBC and at Kendal Mountain Festival. His music captures places, times, and emotions, using field recordings, analog equipment, and generative techniques to create mellow and introspective soundscapes. With over a decade of experience as a commercial filmmaker, Garth has worked with brands like Volvo, Speedo, Jaguar Land Rover, Skiddle, and Neve. He balances developing personal projects with responding to creative briefs across all three mediums.
+                </p>
             </div>
-        </div>
-    </div>
+            <div class="image-column">
+                <img src="images/garth.jpg" alt="Garth Dew" />
+            </div>
+        </section>
+    </main>
 </body>
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film - Garth Dew</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1><a href="index.html">Garth Dew</a></h1>
+        <button class="menu-button" onclick="toggleMenu()">☰</button>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">About</a></li>
+                <li><a href="music.html">Music</a></li>
+                <li><a href="film.html">Film</a></li>
+                <li><a href="photo.html">Photo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="film-section">
+            <h2>Film</h2>
+            <p>I create films rooted in documentary, across original and commercial projects.</p>
+            <div class="video-container">
+                <iframe 
+                    src="https://player.vimeo.com/video/123456789" 
+                    frameborder="0" 
+                    allow="autoplay; fullscreen; picture-in-picture" 
+                    allowfullscreen 
+                    title="Film Project"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

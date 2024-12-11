@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography - Garth Dew</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Specific styles for the Photography page */
+        .photo-section {
+            padding: 40px 20px;
+        }
+
+        .two-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .photo-column {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .photo-column img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photo-column img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1><a href="index.html">Garth Dew</a></h1>
+        <button class="menu-button" onclick="toggleMenu()">☰</button>
+        <nav>
+            <ul class="menu">
+                <li><a href="about.html">About</a></li>
+                <li><a href="music.html">Music</a></li>
+                <li><a href="film.html">Film</a></li>
+                <li><a href="photo.html">Photo</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="photo-section">
+            <h2>Photography</h2>
+            <p>Explore my photography projects below.</p>
+            <div class="two-columns">
+                <div class="photo-column">
+                    <a href="photo-project1.html">
+                        <img src="images/photo1.jpg" alt="Photography Project 1">
+                    </a>
+                </div>
+                <div class="photo-column">
+                    <a href="photo-project2.html">
+                        <img src="images/photo2.jpg" alt="Photography Project 2">
+                    </a>
+                </div>
+                <div class="photo-column">
+                    <a href="photo-project3.html">
+                        <img src="images/photo3.jpg" alt="Photography Project 3">
+                    </a>
+                </div>
+                <div class="photo-column">
+                    <a href="photo-project4.html">
+                        <img src="images/photo4.jpg" alt="Photography Project 4">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

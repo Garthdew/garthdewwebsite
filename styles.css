@@ -1,195 +1,95 @@
-/* Import IBM Plex Mono font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
-
 /* General body and font styles */
 body {
-    display: flex;
-    font-family: 'IBM Plex Mono', monospace; /* Use IBM Plex Mono */
-    min-height: 100vh;
-    background: #FCF5E5; /* Set background color */
+    font-family: 'Helvetica', Arial, sans-serif;
+    background: #fff;
     color: #333;
     margin: 0;
     padding: 0;
-    font-size: 16px;
-    font-weight: normal;
-    align-items: flex-start; /* Ensure alignment starts at the top-left */
+    text-align: center;
 }
 
-/* Heading styles */
-h1, h2, h3, h4, h5, h6 {
-    font-size: 20px;
-    margin-bottom: 8px;
-    font-weight: bold; /* Headings in bold */
+/* Header Styling */
+header {
+    padding: 20px 0;
+    background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Sidebar styling */
-.sidebar {
-    width: 250px;
-    background: #FCF5E5;
-    padding: 20px;
-    overflow-y: auto;
-    position: fixed;
-    height: 100%;
-    transform: translateX(0);
-    transition: transform 0.3s ease;
-    z-index: 999;
-    text-align: left; /* Ensure left alignment of text in the sidebar */
-}
-
-.sidebar h1 {
-    font-size: 20px;
-    font-weight: bold; /* Bold heading */
-    margin-bottom: 15px;
-}
-
-.sidebar h2, .sidebar p {
-    font-size: 16px;
-    font-weight: normal;
+header h1 {
+    font-size: 36px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
-.sidebar a {
-    display: block;
-    padding: 5px 0;
+nav ul.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul.menu li {
+    display: inline;
+}
+
+nav ul.menu li a {
     text-decoration: none;
     color: #333;
     font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
-.sidebar a:hover {
-    color: #0066cc;
+nav ul.menu li a:hover {
+    background-color: #ddd;
 }
 
-/* Hamburger menu button styling */
-.menu-button {
-    display: none;
-    color: #333;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
+/* Main Content */
+main {
+    padding: 40px 20px;
+    text-align: left; /* Align text to the left for readability */
 }
 
-/* Main content styling */
-.content {
-    margin-left: 270px; /* Space for sidebar on desktop */
-    padding: 20px;
-    width: calc(100% - 270px);
-    background: #FCF5E5; /* Match the body background */
-    text-align: left; /* Ensure all elements are left-aligned */
+section {
+    margin-bottom: 40px;
 }
 
-/* Text content styling */
-.text-content {
-    padding: 20px 0;
-    width: 100%; /* Occupy full width within the container */
-    max-width: 800px; /* Restrict the width of the content */
-    margin: 0; /* No auto-centering */
-    text-align: left; /* Explicitly left-align all text */
-}
-
-/* Full-width image gallery */
-.gallery-container {
-    width: 100%;
+/* Two-column layout */
+.two-columns {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 20px 0;
-    justify-content: flex-start; /* Align gallery items to the left */
+    flex-wrap: wrap; /* Adjust for smaller screens */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }
 
-/* Carousel styling */
-.carousel {
-    display: flex;
-    align-items: flex-start; /* Align carousel items to the top-left */
-    justify-content: flex-start; /* Left-align carousel */
-    max-width: 600px;
-    margin: 20px 0;
-    position: relative;
+.text-column {
+    flex: 1;
+    max-width: 50%; /* Text occupies 50% of the width */
+    line-height: 1.6;
 }
 
-.carousel img {
+.image-column {
+    flex: 1;
+    max-width: 50%; /* Image occupies 50% of the width */
+}
+
+.image-column img {
     width: 100%;
     height: auto;
-    display: block;
-    border-radius: 4px;
-    cursor: pointer; /* Allows clicking to scroll to the next image */
+    border-radius: 8px; /* Add some styling to the image */
 }
 
-.carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    border: none;
-    font-size: 24px;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 1;
-}
-
-.carousel-button.prev {
-    left: 10px;
-}
-
-.carousel-button.next {
-    right: 10px;
-}
-
-.carousel-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Responsive adjustments for mobile screens */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .menu-button {
-        display: block;
+    .two-columns {
+        flex-direction: column; /* Stack columns on top of each other */
     }
 
-    .sidebar {
-        transform: translateX(100%);
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        transition: transform 0.3s ease;
-        z-index: 999;
-    }
-
-    .sidebar.active {
-        transform: translateX(0);
-    }
-
-    .content {
-        margin-left: 0;
-        padding: 20px;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .text-content {
-        width: 100%;
-        max-width: 100%; /* Allow full width on mobile */
-    }
-
-    .gallery-container img {
-        width: calc(50% - 10px); /* Two columns on smaller screens */
-    }
-
-    .carousel {
-        justify-content: center; /* Center carousel on mobile for better appearance */
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .gallery-container img {
-        width: 100%; /* Single column on extra small screens */
+    .text-column, .image-column {
+        max-width: 100%; /* Full width on smaller screens */
     }
 }

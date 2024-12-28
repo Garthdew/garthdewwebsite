@@ -13,7 +13,7 @@ body {
 
 /* Heading styles */
 h1 {
-    font-size: 24px; /* Adjust to your preferred size */
+    font-size: 24px;
     font-weight: normal;
     margin-bottom: 15px;
 }
@@ -89,10 +89,11 @@ h3, h4, h5, h6 {
     background: #fff;
 }
 
-/* Text content styling */
 .text-content {
     padding: 20px 0;
+    margin: 0 auto;
     width: 100%; /* Ensures full width on mobile */
+    max-width: 50%; /* Narrower width on desktop */
 }
 
 /* Full-width image gallery */
@@ -119,7 +120,7 @@ h3, h4, h5, h6 {
     height: auto;
     display: block;
     border-radius: 4px;
-    cursor: pointer; /* Allows clicking to scroll to the next image */
+    cursor: pointer;
 }
 
 .carousel-button {
@@ -177,6 +178,7 @@ h3, h4, h5, h6 {
 
     .text-content {
         width: 100%;
+        max-width: 100%; /* Full width on mobile */
     }
 
     .gallery-container img {

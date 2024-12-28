@@ -3,44 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garth Dew</title>
+    <title>Garth Dew's Website</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <h1><a href="index.html">Garth Dew</a></h1>
-        <button class="menu-button" onclick="toggleMenu()">☰</button>
-        <nav>
-            <ul class="menu">
-                <li><a href="index.html">About</a></li>
-                <li><a href="sound.html">Sound</a></li>
-                <li><a href="photo.html">Photo</a></li>
-                <li><a href="film.html">Film</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+
+    <!-- Hamburger Menu Button for Mobile -->
+    <button class="menu-button" onclick="toggleSidebar()">☰</button>
+
+    <!-- JavaScript to dynamically load the sidebar -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("sidebar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.body.insertAdjacentHTML("afterbegin", data);
+                });
+        });
+
+        // Function to toggle sidebar visibility on mobile
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Carousel functionality
+        let currentImageIndex = 0;
+        const images = ["garth.jpg", "garth.jpg", "garth.jpg"]; // Add image paths here
+
+        function showImage(index) {
+            const galleryImage = document.querySelector(".carousel img");
+            galleryImage.src = images[index];
+        }
+
+        function nextImage(event) {
+            if (event) event.stopPropagation(); // Stop propagation if triggered by button
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage(currentImageIndex);
+        }
+
+        function prevImage(event) {
+            if (event) event.stopPropagation(); // Stop propagation if triggered by button
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            showImage(currentImageIndex);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            showImage(currentImageIndex);
+        });
+    </script>
 
     <!-- Main Content -->
-    <main>
-        <section id="about" class="two-columns">
-            <div class="text-column">
-                <h2>Garth Dew is a UK-based artist working across sound, film, and photography to capture moods, moments, and stories that interest him.</h2>
-                <p>His personal film and photography projects, rooted in documentary, have been featured on the BBC and at Kendal Mountain Festival. His music captures places, times, and emotions, using field recordings, analog equipment, and generative techniques to create mellow and introspective soundscapes.</p>
-                <p>With over a decade of experience as a commercial filmmaker, Garth has worked with brands like Volvo, Speedo, Jaguar Land Rover, Skiddle, and Neve. He balances developing personal projects with responding to creative briefs across all three mediums.</p>
+    <div class="content">
+        <div class="text-content">
+            <p>Welcome</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales est ac libero sagittis, nec fringilla arcu accumsan.</p>
+            <p>Fusce at turpis nec velit eleifend laoreet. Aliquam erat volutpat. Donec vel nunc vitae ligula ullamcorper convallis.</p>
+            <div class="carousel">
+                <button class="carousel-button prev" onclick="prevImage(event)">❮</button>
+                <img src="" alt="Gallery Image" onclick="nextImage()">
+                <button class="carousel-button next" onclick="nextImage(event)">❯</button>
             </div>
-            <div class="image-column">
-                <img src="images/garthdew.jpg" alt="Garth Dew" />
-            </div>
-        </section>
-    </main>
-
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector('.menu');
-            menu.classList.toggle('active');
-        }
-    </script>
+        </div>
+    </div>
 </body>
 </html>

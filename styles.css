@@ -89,11 +89,13 @@ h3, h4, h5, h6 {
     background: #fff;
 }
 
+/* Text content styling */
 .text-content {
     padding: 20px 0;
-    margin: 0 auto;
+    margin: 0; /* Removes auto-centering */
     width: 100%; /* Ensures full width on mobile */
     max-width: 50%; /* Narrower width on desktop */
+    text-align: left; /* Explicitly left-align text */
 }
 
 /* Full-width image gallery */

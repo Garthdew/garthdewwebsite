@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garth Dew's Website</title>
+    <title>Garth Dew</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Hamburger Menu Button for Mobile -->
     <button class="menu-button" onclick="toggleSidebar()">☰</button>
 
-    <!-- JavaScript to dynamically load the sidebar -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             fetch("sidebar.html")
@@ -21,25 +19,22 @@
                 });
         });
 
-        // Function to toggle sidebar visibility on mobile
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('active');
         }
-        });
     </script>
-
-    <!-- Main Content -->
+      
     <div class="content">
         <div class="text-content">
-            <h1>Garth Dew - A human being who does projects</h1>
-            <p>I have a perpetual curiosity about the human experience and the world around me. I am many things&ndash;a filmmaker, photographer, composer, entrepreneur, father, husband and human being. But I try not to see myself as a noun. I am a verb&mdash;always in motion, exploring, creating, and responding to the world. My projects are how I&nbsp;cultivate awareness and stay grounded in the present. I am often drawn to capturing people, places and the stories that define them.&nbsp;</p>
-            <p>After a short stint as a professional rugby player, I completed a music production degree at UCLan before pursuing film and photography. I began my career at a sportswear company, where I created short films about athletes preparing for the Glasgow 2014 Commonwealth Games. This experience triggered my interest in documentary storytelling.</p>
-            <p>My personal film and photo projects, shot in an honest, cinematic style, include short documentaries featured on the BBC and at Kendal Mountain Festival, as well as long-term photography monographs.</p>
-            <p>Over the past decade, I have worked with over 200 clients under the GD Video Ltd label on commercial storytelling projects. My clients include major brands such as Neve, Volvo, Speedo, Jaguar Land Rover, Autodesk, Skiddle, and Quorn.</p>
-            <p>More recently, I've returned to my musical roots and began creating experimental and ambient music. My debut album, Flow, is set to release in 2025. I am increasingly focused on developing original projects that meld film, photography, sound, and life.</p>
-            <p>I balance my time between personal and commercial projects and am open to interesting opportunities across all disciplines.</p>
-            <p><img src="/images/garthdew.jpg" alt=""/></p>
-    </div>
+        <h1>Garth Dew - A human being who does projects</h1>
+        <p>I have a perpetual curiosity about the human experience and the world around me. I am many things&ndash;a filmmaker, photographer, composer, entrepreneur, father, husband and human being. But I try not to see myself as a noun. I am a verb&mdash;always in motion, exploring, creating, and responding to the world. My projects are how I&nbsp;cultivate awareness and stay grounded in the present. I am often drawn to capturing people, places and the stories that define them.&nbsp;</p>
+        <p>After a short stint as a professional rugby player, I completed a music production degree at UCLan before pursuing film and photography. I began my career at a sportswear company, where I created short films about athletes preparing for the Glasgow 2014 Commonwealth Games. This experience triggered my interest in documentary storytelling.</p>
+        <p>My personal film and photo projects, shot in an honest, cinematic style, include short documentaries featured on the BBC and at Kendal Mountain Festival, as well as long-term photography monographs.</p>
+        <p>Over the past decade, I have worked with over 200 clients under the GD Video Ltd label on commercial storytelling projects. My clients include major brands such as Neve, Volvo, Speedo, Jaguar Land Rover, Autodesk, Skiddle, and Quorn.</p>
+        <p>More recently, I've returned to my musical roots and began creating experimental and ambient music. My debut album, Flow, is set to release in 2025. I am increasingly focused on developing original projects that meld film, photography, sound, and life.</p>
+        <p>I balance my time between personal and commercial projects and am open to interesting opportunities across all disciplines.</p>
+        <p><img src="/images/garthdew.jpg" alt="garth dew headshot"/></p> 
+        </div>      
 </body>
 </html>

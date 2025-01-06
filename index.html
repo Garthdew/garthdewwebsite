@@ -26,45 +26,20 @@
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('active');
         }
-
-        // Carousel functionality
-        let currentImageIndex = 0;
-        const images = ["garth.jpg", "garth.jpg", "garth.jpg"]; // Add image paths here
-
-        function showImage(index) {
-            const galleryImage = document.querySelector(".carousel img");
-            galleryImage.src = images[index];
-        }
-
-        function nextImage(event) {
-            if (event) event.stopPropagation(); // Stop propagation if triggered by button
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            showImage(currentImageIndex);
-        }
-
-        function prevImage(event) {
-            if (event) event.stopPropagation(); // Stop propagation if triggered by button
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            showImage(currentImageIndex);
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            showImage(currentImageIndex);
         });
     </script>
 
     <!-- Main Content -->
     <div class="content">
         <div class="text-content">
-            <p>Welcome</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sodales est ac libero sagittis, nec fringilla arcu accumsan.</p>
-            <p>Fusce at turpis nec velit eleifend laoreet. Aliquam erat volutpat. Donec vel nunc vitae ligula ullamcorper convallis.</p>
-            <div class="carousel">
-                <button class="carousel-button prev" onclick="prevImage(event)">❮</button>
-                <img src="" alt="Gallery Image" onclick="nextImage()">
-                <button class="carousel-button next" onclick="nextImage(event)">❯</button>
-            </div>
-        </div>
+            <h1>Garth Dew - A human being who does projects</h1>
+            <p>I have a perpetual curiosity about the human experience and the world around me. I am many things&ndash;a filmmaker, photographer, composer, entrepreneur, father, husband and human being. But I try not to see myself as a noun. I am a verb&mdash;always in motion, exploring, creating, and responding to the world. My projects are how I&nbsp;cultivate awareness and stay grounded in the present. I am often drawn to capturing people, places and the stories that define them.&nbsp;</p>
+            <p>After a short stint as a professional rugby player, I completed a music production degree at UCLan before pursuing film and photography. I began my career at a sportswear company, where I created short films about athletes preparing for the Glasgow 2014 Commonwealth Games. This experience triggered my interest in documentary storytelling.</p>
+            <p>My personal film and photo projects, shot in an honest, cinematic style, include short documentaries featured on the BBC and at Kendal Mountain Festival, as well as long-term photography monographs.</p>
+            <p>Over the past decade, I have worked with over 200 clients under the GD Video Ltd label on commercial storytelling projects. My clients include major brands such as Neve, Volvo, Speedo, Jaguar Land Rover, Autodesk, Skiddle, and Quorn.</p>
+            <p>More recently, I've returned to my musical roots and began creating experimental and ambient music. My debut album, Flow, is set to release in 2025. I am increasingly focused on developing original projects that meld film, photography, sound, and life.</p>
+            <p>I balance my time between personal and commercial projects and am open to interesting opportunities across all disciplines.</p>
+            <p><img src="/garthdew.jpg" alt=""/></p>
     </div>
 </body>
 </html>

@@ -103,13 +103,14 @@ h3, h4, h5, h6 {
 /* Text content styling */
 .text-content {
     padding: 20px 0;
-    margin: 0 auto; /* Center content on desktop */
+    margin: 0; /* Remove auto-centering */
     width: 100%; /* Ensures full width on mobile */
     max-width: 40%; /* Restrict width to 40% on desktop */
     text-align: left; /* Explicitly left-align text */
     text-transform: lowercase; /* Force lowercase */
     color: rgba(51, 51, 51, 0.5); /* 50% black */
     font-size: 12px; /* Uniform text size */
+    float: left; /* Align content to the left */
 }
 
 /* Full-width image gallery */
@@ -162,7 +163,7 @@ h3, h4, h5, h6 {
     margin: 20px 0;
     position: relative;
     overflow: hidden; /* Hide overflow to prevent layout shifts */
-    height: 400px; /* Set fixed height for the carousel */
+    height: 800px; /* Increase height for larger images */
 }
 
 .carousel img {
@@ -209,13 +210,10 @@ h3, h4, h5, h6 {
         text-transform: lowercase; /* Force lowercase */
     }
 
-    .gallery-container img {
-        width: calc(50% - 10px);
-    }
-
     .carousel {
         justify-content: center;
         max-width: 100%;
+        height: 400px; /* Adjust height for smaller screens */
     }
 }
 

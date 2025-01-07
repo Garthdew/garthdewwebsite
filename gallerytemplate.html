@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Name</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <button class="menu-button" onclick="toggleSidebar()">☰</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("sidebar.html")
+                .then((response) => response.text())
+                .then((data) => {
+                    document.body.insertAdjacentHTML("afterbegin", data);
+                });
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector(".sidebar");
+            sidebar.classList.toggle("active");
+        }
+
+        const images = [
+            "images/garthdew.jpg",
+            "images/test.jpg",
+        ];
+        let currentIndex = 0;
+
+        function showImage(index) {
+            const carouselImage = document.querySelector(".carousel img");
+            carouselImage.src = images[index];
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            showImage(currentIndex);
+        });
+    </script>
+
+    <div class="content">
+        <h1>Gallery</h1>
+        <div class="carousel">
+            <button class="carousel-button prev" onclick="prevImage()">❮</button>
+            <img src="" alt="Gallery Image" />
+            <button class="carousel-button next" onclick="nextImage()">❯</button>
+        </div>
+    </div>
+</body>
+</html>

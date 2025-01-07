@@ -108,34 +108,25 @@ h3, h4, h5, h6 {
 }
 
 /* Carousel styling */
-.carousel {
-    display: flex;
-    align-items: left;
-    justify-content: flex-start;
-    max-width: 600px;
-    margin: 20px 0;
-    position: relative;
-}
-
-.carousel img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
+/* Updated Carousel Button Styling */
 .carousel-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    background-color: #fff; /* Solid white background */
+    color: #000; /* Black icon color */
     border: none;
-    font-size: 24px;
-    padding: 10px;
+    font-size: 12px; /* 50% smaller */
+    padding: 5px; /* Reduced padding for smaller size */
+    width: 24px; /* Define width for consistent size */
+    height: 24px; /* Define height for consistent size */
     cursor: pointer;
     z-index: 1;
+    border-radius: 50%; /* Make buttons circular */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for visibility */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .carousel-button.prev {
@@ -147,7 +138,28 @@ h3, h4, h5, h6 {
 }
 
 .carousel-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #f0f0f0; /* Slightly darker background on hover */
+}
+
+/* Ensure consistent carousel height */
+.carousel {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: flex-start;
+    max-width: 600px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden; /* Hide overflow to prevent layout shifts */
+    height: 400px; /* Set fixed height for the carousel */
+}
+
+.carousel img {
+    width: auto; /* Maintain aspect ratio */
+    height: 100%; /* Scale to match carousel height */
+    display: block;
+    border-radius: 4px;
+    cursor: pointer;
+    object-fit: contain; /* Ensure the image fits within the defined space */
 }
 
 /* Responsive adjustments for mobile screens */

@@ -1,7 +1,10 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+
 /* General body and font styles */
 body {
     display: flex;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace; /* IBM Plex Mono for all text */
     min-height: 100vh;
     background: #fff;
     color: #333;
@@ -12,24 +15,25 @@ body {
 }
 
 /* Heading styles */
-h1 {
+h1, h2 {
     font-family: 'IBM Plex Mono', monospace;
+    text-align: left; /* Left-align headings */
+    margin-left: 30px; /* Add padding to align with gallery */
+}
+
+h1 {
     font-size: 24px;
     font-weight: normal;
     margin-bottom: 15px;
-    text-align: center; /* Center align main headings */
 }
 
 h2 {
-    font-family: 'IBM Plex Mono', monospace;
     font-size: 20px;
     font-weight: normal;
     margin-bottom: 10px;
-    text-align: center; /* Center align subheadings */
 }
 
 h3, h4, h5, h6 {
-    font-family: 'IBM Plex Mono', monospace;
     font-size: 16px;
     font-weight: normal;
     margin-bottom: 8px;
@@ -56,19 +60,11 @@ h3, h4, h5, h6 {
     margin-bottom: 15px;
 }
 
-.sidebar h2, .sidebar p {
+.sidebar h2, .sidebar p, .sidebar a {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px; /* Smaller font size */
-    font-weight: normal;
-    margin-bottom: 10px;
-}
-
-.sidebar a {
-    display: block;
-    padding: 5px 0;
-    text-decoration: none;
     color: rgba(0, 0, 0, 0.5); /* Reduced color intensity */
-    font-size: 12px;
+    margin-bottom: 10px;
 }
 
 .sidebar a:hover {
@@ -95,35 +91,16 @@ h3, h4, h5, h6 {
     padding: 20px;
     width: calc(100% - 270px);
     background: #fff;
-}
-
-/* Text content styling */
-.text-content {
-    padding: 20px 0;
-    margin: 0;
-    width: 100%;
-    max-width: 50%; /* Narrower width on desktop */
-    text-align: left;
-}
-
-/* Full-width image gallery */
-.gallery-container {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Center the gallery horizontally */
-    align-items: center; /* Center the gallery vertically */
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 20px 0;
+    text-align: left; /* Ensure all text is left-aligned */
 }
 
 /* Carousel styling */
 .carousel {
     display: flex;
     align-items: center; /* Vertically center images */
-    justify-content: center; /* Center carousel horizontally */
+    justify-content: flex-start; /* Left-align carousel */
     max-width: 80%; /* Adjust as needed for desired width */
-    margin: 20px auto; /* Center horizontally on the page */
+    margin: 20px 30px; /* Add margin to align with text */
     position: relative;
     height: 400px; /* Set consistent height for all images */
     overflow: hidden;
@@ -151,11 +128,11 @@ h3, h4, h5, h6 {
 }
 
 .carousel-button.prev {
-    left: -20px; /* Adjust positioning for minimalist look */
+    left: -40px; /* Adjust for padding */
 }
 
 .carousel-button.next {
-    right: -20px; /* Adjust positioning for minimalist look */
+    right: -40px; /* Adjust for padding */
 }
 
 .carousel-button:hover {
@@ -190,23 +167,17 @@ h3, h4, h5, h6 {
         max-width: 100%;
     }
 
-    .text-content {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .gallery-container img {
-        width: calc(50% - 10px);
-    }
-
     .carousel {
-        justify-content: center;
-        max-width: 100%;
+        justify-content: center; /* Center carousel on mobile */
     }
 }
 
 @media (max-width: 480px) {
-    .gallery-container img {
-        width: 100%;
+    .carousel-button.prev {
+        left: -20px; /* Adjust for smaller screens */
+    }
+
+    .carousel-button.next {
+        right: -20px; /* Adjust for smaller screens */
     }
 }

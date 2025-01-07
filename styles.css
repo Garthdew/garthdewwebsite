@@ -15,18 +15,21 @@ body {
 
 /* Heading styles */
 h1 {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 24px;
     font-weight: normal;
     margin-bottom: 15px;
 }
 
 h2 {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 20px;
     font-weight: normal;
     margin-bottom: 10px;
 }
 
 h3, h4, h5, h6 {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 16px;
     font-weight: normal;
     margin-bottom: 8px;
@@ -34,6 +37,7 @@ h3, h4, h5, h6 {
 
 /* Sidebar styling */
 .sidebar {
+
     width: 250px;
     background: #fff;
     padding: 20px;
@@ -47,12 +51,14 @@ h3, h4, h5, h6 {
 }
 
 .sidebar h1 {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 20px;
     font-weight: normal;
     margin-bottom: 15px;
 }
 
 .sidebar h2, .sidebar p {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px; /* Reduced font size by 4px */
     font-weight: normal;
     margin-bottom: 10px;

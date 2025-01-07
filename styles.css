@@ -158,22 +158,22 @@ h3, h4, h5, h6 {
 .carousel {
     display: flex;
     align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
+    justify-content: flex-start; /* Align carousel to the left */
     max-width: 100%; /* Allow carousel to expand fully */
     margin: 20px 0;
     position: relative;
     overflow: hidden; /* Hide overflow to prevent layout shifts */
-    height: 600px; /* Adjust height to be smaller */
+    height: 600px; /* Set fixed height for the carousel */
 }
 
 .carousel img {
     max-width: 100%; /* Prevent squashing of landscape images */
-    max-height: 100%; /* Scale to fit carousel height */
+    height: auto; /* Maintain aspect ratio */
     display: block;
     border-radius: 4px;
     cursor: pointer;
     object-fit: contain; /* Ensure the image fits within the defined space */
-    margin: auto; /* Center images horizontally */
+    margin: auto 0; /* Center portrait images vertically */
 }
 
 /* Responsive adjustments for mobile screens */

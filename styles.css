@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
-
 /* General body and font styles */
 body {
     display: flex;
-    font-family: 'IBM Plex Mono', monospace; /* Updated font */
+    font-family: 'IBM Plex Mono', monospace;
     min-height: 100vh;
     background: #fff;
     color: #333;
@@ -19,6 +17,7 @@ h1 {
     font-size: 24px;
     font-weight: normal;
     margin-bottom: 15px;
+    text-align: center; /* Center align main headings */
 }
 
 h2 {
@@ -26,6 +25,7 @@ h2 {
     font-size: 20px;
     font-weight: normal;
     margin-bottom: 10px;
+    text-align: center; /* Center align subheadings */
 }
 
 h3, h4, h5, h6 {
@@ -37,7 +37,6 @@ h3, h4, h5, h6 {
 
 /* Sidebar styling */
 .sidebar {
-
     width: 250px;
     background: #fff;
     padding: 20px;
@@ -59,7 +58,7 @@ h3, h4, h5, h6 {
 
 .sidebar h2, .sidebar p {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px; /* Reduced font size by 4px */
+    font-size: 12px; /* Smaller font size */
     font-weight: normal;
     margin-bottom: 10px;
 }
@@ -68,8 +67,8 @@ h3, h4, h5, h6 {
     display: block;
     padding: 5px 0;
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.5); /* Reduced font color to match */
-    font-size: 12px; /* Reduced font size */
+    color: rgba(0, 0, 0, 0.5); /* Reduced color intensity */
+    font-size: 12px;
 }
 
 .sidebar a:hover {
@@ -101,20 +100,21 @@ h3, h4, h5, h6 {
 /* Text content styling */
 .text-content {
     padding: 20px 0;
-    margin: 0; /* Removes auto-centering */
-    width: 100%; /* Ensures full width on mobile */
+    margin: 0;
+    width: 100%;
     max-width: 50%; /* Narrower width on desktop */
-    text-align: left; /* Explicitly left-align text */
+    text-align: left;
 }
 
 /* Full-width image gallery */
 .gallery-container {
     width: 100%;
     display: flex;
+    justify-content: center; /* Center the gallery horizontally */
+    align-items: center; /* Center the gallery vertically */
     flex-wrap: wrap;
     gap: 10px;
     padding: 20px 0;
-    justify-content: center; /* Center the images */
 }
 
 /* Carousel styling */
@@ -122,26 +122,28 @@ h3, h4, h5, h6 {
     display: flex;
     align-items: center; /* Vertically center images */
     justify-content: center; /* Center carousel horizontally */
-    max-width: 600px; /* Restrict maximum width */
-    margin: 20px auto; /* Center the carousel */
+    max-width: 80%; /* Adjust as needed for desired width */
+    margin: 20px auto; /* Center horizontally on the page */
     position: relative;
+    height: 400px; /* Set consistent height for all images */
+    overflow: hidden;
 }
 
 .carousel img {
-    width: 100%;
-    height: auto;
+    max-width: 100%; /* Scale images to fit within container */
+    max-height: 100%; /* Scale images to maintain aspect ratio */
+    object-fit: contain; /* Keeps images within the fixed height */
     display: block;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
+/* Arrow Buttons */
 .carousel-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     color: #000;
     border: none;
-    font-size: 24px;
+    font-size: 18px; /* Smaller size for minimalist arrows */
     cursor: pointer;
     z-index: 1;
     background: none; /* Remove background */
@@ -149,11 +151,15 @@ h3, h4, h5, h6 {
 }
 
 .carousel-button.prev {
-    left: -40px; /* Adjust spacing for minimalist look */
+    left: -20px; /* Adjust positioning for minimalist look */
 }
 
 .carousel-button.next {
-    right: -40px; /* Adjust spacing for minimalist look */
+    right: -20px; /* Adjust positioning for minimalist look */
+}
+
+.carousel-button:hover {
+    color: #666; /* Slight hover effect */
 }
 
 /* Responsive adjustments for mobile screens */
@@ -186,7 +192,7 @@ h3, h4, h5, h6 {
 
     .text-content {
         width: 100%;
-        max-width: 100%; /* Full width on mobile */
+        max-width: 100%;
     }
 
     .gallery-container img {

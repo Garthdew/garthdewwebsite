@@ -1,7 +1,7 @@
 /* General body and font styles */
 body {
     display: flex;
-    font-family: 'Helvetica', Arial, sans-serif;
+    font-family: 'IBM Plex Mono', monospace; /* Updated font */
     min-height: 100vh;
     background: #fff;
     color: #333;
@@ -41,6 +41,7 @@ h3, h4, h5, h6 {
     transform: translateX(0);
     transition: transform 0.3s ease;
     z-index: 999;
+    color: rgba(0, 0, 0, 0.5); /* Reduced text color to 50% black */
 }
 
 .sidebar h1 {
@@ -50,7 +51,7 @@ h3, h4, h5, h6 {
 }
 
 .sidebar h2, .sidebar p {
-    font-size: 14px;
+    font-size: 12px; /* Reduced font size by 4px */
     font-weight: normal;
     margin-bottom: 10px;
 }
@@ -59,8 +60,8 @@ h3, h4, h5, h6 {
     display: block;
     padding: 5px 0;
     text-decoration: none;
-    color: #333;
-    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5); /* Reduced font color to match */
+    font-size: 12px; /* Reduced font size */
 }
 
 .sidebar a:hover {
@@ -105,15 +106,16 @@ h3, h4, h5, h6 {
     flex-wrap: wrap;
     gap: 10px;
     padding: 20px 0;
+    justify-content: center; /* Center the images */
 }
 
 /* Carousel styling */
 .carousel {
     display: flex;
-    align-items: left;
-    justify-content: flex-start;
-    max-width: 600px;
-    margin: 20px 0;
+    align-items: center; /* Vertically center images */
+    justify-content: center; /* Center carousel horizontally */
+    max-width: 600px; /* Restrict maximum width */
+    margin: 20px auto; /* Center the carousel */
     position: relative;
 }
 
@@ -129,25 +131,21 @@ h3, h4, h5, h6 {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    color: #000;
     border: none;
     font-size: 24px;
-    padding: 10px;
     cursor: pointer;
     z-index: 1;
+    background: none; /* Remove background */
+    padding: 0;
 }
 
 .carousel-button.prev {
-    left: 10px;
+    left: -40px; /* Adjust spacing for minimalist look */
 }
 
 .carousel-button.next {
-    right: 10px;
-}
-
-.carousel-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    right: -40px; /* Adjust spacing for minimalist look */
 }
 
 /* Responsive adjustments for mobile screens */

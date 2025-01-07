@@ -4,33 +4,36 @@ body {
     font-family: 'Helvetica', Arial, sans-serif;
     min-height: 100vh;
     background: #fff;
-    color: #333;
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
     margin: 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 12px; /* Uniform text size */
     font-weight: normal;
 }
 
 /* Heading styles */
 h1 {
-    font-size: 24px;
+    font-size: 12px; /* Uniform text size */
     font-weight: normal;
     margin-bottom: 15px;
     text-transform: lowercase; /* Force lowercase */
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 12px; /* Uniform text size */
     font-weight: normal;
     margin-bottom: 10px;
     text-transform: lowercase; /* Force lowercase */
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
 }
 
 h3, h4, h5, h6 {
-    font-size: 16px;
+    font-size: 12px; /* Uniform text size */
     font-weight: normal;
     margin-bottom: 8px;
     text-transform: lowercase; /* Force lowercase */
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
 }
 
 /* Sidebar styling */
@@ -44,18 +47,19 @@ h3, h4, h5, h6 {
     transform: translateX(0);
     transition: transform 0.3s ease;
     z-index: 999;
-    color: rgba(51, 51, 51, 0.5); /* 50% less black */
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
+    font-size: 12px; /* Uniform text size */
 }
 
 .sidebar h1 {
-    font-size: 20px;
+    font-size: 12px; /* Uniform text size */
     font-weight: normal;
     margin-bottom: 15px;
     text-transform: lowercase; /* Force lowercase */
 }
 
 .sidebar h2, .sidebar p {
-    font-size: 12px;
+    font-size: 12px; /* Uniform text size */
     font-weight: normal;
     margin-bottom: 10px;
     text-transform: lowercase; /* Force lowercase */
@@ -65,8 +69,8 @@ h3, h4, h5, h6 {
     display: block;
     padding: 5px 0;
     text-decoration: none;
-    color: rgba(51, 51, 51, 0.5); /* 50% less black */
-    font-size: 12px;
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
+    font-size: 12px; /* Uniform text size */
     text-transform: lowercase; /* Force lowercase */
 }
 
@@ -77,8 +81,8 @@ h3, h4, h5, h6 {
 /* Hamburger menu button styling */
 .menu-button {
     display: none;
-    color: #333;
-    font-size: 24px;
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
+    font-size: 12px; /* Uniform text size */
     background: none;
     border: none;
     cursor: pointer;
@@ -99,11 +103,13 @@ h3, h4, h5, h6 {
 /* Text content styling */
 .text-content {
     padding: 20px 0;
-    margin: 0; /* Removes auto-centering */
+    margin: 0 auto; /* Center content on desktop */
     width: 100%; /* Ensures full width on mobile */
-    max-width: 100%; /* Adjust to fit mobile and desktop */
+    max-width: 40%; /* Restrict width to 40% on desktop */
     text-align: left; /* Explicitly left-align text */
     text-transform: lowercase; /* Force lowercase */
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
+    font-size: 12px; /* Uniform text size */
 }
 
 /* Full-width image gallery */
@@ -121,9 +127,9 @@ h3, h4, h5, h6 {
     top: 50%;
     transform: translateY(-50%);
     background-color: #fff; /* Solid white background */
-    color: #000; /* Black icon color */
+    color: rgba(51, 51, 51, 0.5); /* 50% black */
     border: none;
-    font-size: 12px; /* 50% smaller */
+    font-size: 12px; /* Uniform text size */
     padding: 5px; /* Reduced padding for smaller size */
     width: 24px; /* Define width for consistent size */
     height: 24px; /* Define height for consistent size */
@@ -199,7 +205,7 @@ h3, h4, h5, h6 {
 
     .text-content {
         width: 100%;
-        max-width: 100%; /* Full width on mobile */
+        max-width: 90%; /* Adjust to ensure content fits on mobile */
         text-transform: lowercase; /* Force lowercase */
     }
 
@@ -216,5 +222,9 @@ h3, h4, h5, h6 {
 @media (max-width: 480px) {
     .gallery-container img {
         width: 100%;
+    }
+
+    .text-content {
+        max-width: 90%; /* Ensure content fits within mobile screens */
     }
 }

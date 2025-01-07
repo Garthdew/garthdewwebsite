@@ -123,6 +123,28 @@ h3, h4, h5, h6 {
 }
 
 /* Carousel styling */
+.carousel {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: flex-start; /* Align carousel to the left */
+    width: 600px; /* Fixed width for carousel */
+    margin: 20px 0;
+    position: fixed; /* Fixed position near the sidebar */
+    left: 270px; /* Align to the right of the sidebar */
+    overflow: hidden; /* Hide overflow to prevent layout shifts */
+    height: 600px; /* Set fixed height for the carousel */
+}
+
+.carousel img {
+    max-width: 100%; /* Prevent squashing of landscape images */
+    max-height: 100%; /* Scale to fit carousel height */
+    display: block;
+    border-radius: 4px;
+    cursor: pointer;
+    object-fit: contain; /* Ensure the image fits within the defined space */
+    margin: auto; /* Center portrait images vertically */
+}
+
 .carousel-button {
     position: absolute;
     top: 50%;
@@ -155,27 +177,6 @@ h3, h4, h5, h6 {
     background-color: #f0f0f0; /* Slightly darker background on hover */
 }
 
-.carousel {
-    display: flex;
-    align-items: center; /* Center items vertically */
-    justify-content: flex-start; /* Align carousel to the left */
-    max-width: 100%; /* Allow carousel to expand fully */
-    margin: 20px 0;
-    position: relative;
-    overflow: hidden; /* Hide overflow to prevent layout shifts */
-    height: 600px; /* Set fixed height for the carousel */
-}
-
-.carousel img {
-    max-width: 100%; /* Prevent squashing of landscape images */
-    height: auto; /* Maintain aspect ratio */
-    display: block;
-    border-radius: 4px;
-    cursor: pointer;
-    object-fit: contain; /* Ensure the image fits within the defined space */
-    margin: auto 0; /* Center portrait images vertically */
-}
-
 /* Responsive adjustments for mobile screens */
 @media (max-width: 768px) {
     .menu-button {
@@ -204,16 +205,13 @@ h3, h4, h5, h6 {
         max-width: 100%;
     }
 
-    .text-content {
-        width: 100%;
-        max-width: 90%; /* Adjust to ensure content fits on mobile */
-        text-transform: lowercase; /* Force lowercase */
-    }
-
     .carousel {
-        justify-content: center;
-        max-width: 100%;
+        position: static; /* Reset fixed positioning */
+        width: 100%;
+        max-width: 100%; /* Allow carousel to fit mobile screen */
         height: 400px; /* Adjust height for smaller screens */
+        left: 0; /* Reset positioning */
+        margin: 0 auto; /* Center carousel on mobile */
     }
 }
 
